@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DataSourcePerFileMappings">
+    <file url="file://$APPLICATION_CONFIG_DIR$/consoles/db/586a8b67-fce7-4345-9ae1-5d3327340607/console.sql" value="586a8b67-fce7-4345-9ae1-5d3327340607" />
+    <file url="file://$PROJECT_DIR$/src/db/aerolinea.sql" value="586a8b67-fce7-4345-9ae1-5d3327340607" />
+  </component>
+</project>
