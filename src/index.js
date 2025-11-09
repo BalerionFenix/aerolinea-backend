@@ -1,6 +1,14 @@
 import app from "./app.js";
 import {PORT} from "./config/config.js"
+import sequelize from "./config/config_db.js";
+import Base from "./app/Base/models/Base.js";
 
 
-app.listen(PORT);
-console.log("server started on port 4000");
+async function startServer() {
+    await sequelize.sync();
+    console.log('All models were synchronized successfully.');
+
+    app.listen(PORT, () => console.log(`Server started on port ${PORT}`));
+}
+
+startServer();

@@ -1,116 +1,79 @@
--- ============================================
--- CREAR BASE DE DATOS (opcional)
--- ============================================
--- CREATE DATABASE aerolinea;
--- \c aerolinea;
+DROP TABLE IF EXISTS base;
 
--- ============================================
--- TABLA: ROLES DE USUARIO
--- ============================================
-CREATE TABLE roles
-(
-    id     SERIAL PRIMARY KEY,
-    nombre VARCHAR(50) NOT NULL UNIQUE
+-- Crear tabla BASE (actualizada según el modelo Sequelize)
+CREATE TABLE base (
+                      id SERIAL PRIMARY KEY,
+                      nombre VARCHAR(100) NOT NULL UNIQUE,
+                      ciudad VARCHAR(100) NOT NULL,
+                      pais VARCHAR(100) NOT NULL,
+                      direccion VARCHAR(255),
+                      "createdAt" TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                      "updatedAt" TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
--- ============================================
--- TABLA: USUARIOS
--- ============================================
-CREATE TABLE usuarios
-(
-    id         SERIAL PRIMARY KEY,
-    nombre     VARCHAR(100) NOT NULL,
-    email      VARCHAR(100) NOT NULL UNIQUE,
-    password   TEXT         NOT NULL,
-    rol_id     INTEGER      NOT NULL,
-    created_at TIMESTAMP DEFAULT NOW(),
-    updated_at TIMESTAMP DEFAULT NOW(),
+SELECT * FROM base;
 
-    CONSTRAINT fk_rol FOREIGN KEY (rol_id) REFERENCES roles (id)
+
+-- Tabla PERSONA
+CREATE TABLE PERSONA (
+                         codigo VARCHAR(50) PRIMARY KEY,
+                         nombre VARCHAR(100) NOT NULL,
+                         base_nombre VARCHAR(100) NOT NULL,
+                         FOREIGN KEY (base_nombre) REFERENCES BASE(nombre)
 );
 
-CREATE INDEX idx_usuario_email ON usuarios (email);
-
--- ============================================
--- TABLA: AVIONES
--- ============================================
-CREATE TABLE aviones
-(
-    id         SERIAL PRIMARY KEY,
-    modelo     VARCHAR(100) NOT NULL,
-    capacidad  INTEGER      NOT NULL CHECK (capacidad > 0),
-    estado     VARCHAR(50)  NOT NULL DEFAULT 'operativo', -- mantenimiento, fuera_servicio
-    created_at TIMESTAMP             DEFAULT NOW()
+-- Tabla PILOTO
+CREATE TABLE PILOTO (
+                        codigo_piloto VARCHAR(50) PRIMARY KEY,
+                        horas_vuelo INT NOT NULL DEFAULT 0,
+                        FOREIGN KEY (codigo_piloto) REFERENCES PERSONA(codigo)
 );
 
--- ============================================
--- TABLA: PILOTOS
--- ============================================
-CREATE TABLE pilotos
-(
-    id                SERIAL PRIMARY KEY,
-    nombre            VARCHAR(100) NOT NULL,
-    licencia          VARCHAR(50)  NOT NULL UNIQUE,
-    experiencia_anios INTEGER CHECK (experiencia_anios >= 0),
-    created_at        TIMESTAMP DEFAULT NOW()
+-- Tabla Miembro
+CREATE TABLE MIEMBRO (
+                         codigo_miembro VARCHAR(50) PRIMARY KEY,
+                         FOREIGN KEY (codigo_miembro) REFERENCES PERSONA(codigo)
 );
 
--- ============================================
--- TABLA: TRIPULACION
--- ============================================
-CREATE TABLE tripulacion
-(
-    id         SERIAL PRIMARY KEY,
-    nombre     VARCHAR(100) NOT NULL,
-    cargo      VARCHAR(50)  NOT NULL, -- auxiliar, jefe de cabina, etc
-    created_at TIMESTAMP DEFAULT NOW()
+-- Tabla AVIÓN
+CREATE TABLE AVION (
+                       codigo VARCHAR(50) PRIMARY KEY,
+                       tipo VARCHAR(100) NOT NULL,
+                       base_nombre VARCHAR(100) NOT NULL,
+                       FOREIGN KEY (base_nombre) REFERENCES BASE(nombre)
 );
 
--- ============================================
--- TABLA: BASES (AEROPUERTOS)
--- ============================================
-CREATE TABLE bases
-(
-    id          SERIAL PRIMARY KEY,
-    nombre      VARCHAR(100)   NOT NULL,
-    ciudad      VARCHAR(100)   NOT NULL,
-    pais        VARCHAR(100)   NOT NULL,
-    codigo_iata CHAR(3) UNIQUE NOT NULL
+-- Tabla VUELO
+CREATE TABLE VUELO (
+                       num_vuelo VARCHAR(50) PRIMARY KEY,
+                       origen VARCHAR(100) NOT NULL,
+                       destino VARCHAR(100) NOT NULL,
+                       hora TIME NOT NULL,
+                       fecha DATE NOT NULL,
+                       avion_codigo VARCHAR(50) NOT NULL,
+                       piloto_codigo VARCHAR(50) NOT NULL,
+                       FOREIGN KEY (avion_codigo) REFERENCES AVION(codigo),
+                       FOREIGN KEY (piloto_codigo) REFERENCES PILOTO(codigo_piloto)
 );
 
--- ============================================
--- TABLA: VUELOS
--- ============================================
-CREATE TABLE vuelos
-(
-    id              SERIAL PRIMARY KEY,
-    avion_id        INTEGER   NOT NULL,
-    piloto_id       INTEGER   NOT NULL,
-    base_salida_id  INTEGER   NOT NULL,
-    base_destino_id INTEGER   NOT NULL,
-    fecha_salida    TIMESTAMP NOT NULL,
-    fecha_llegada   TIMESTAMP NOT NULL,
-    estado          VARCHAR(50) DEFAULT 'programado', -- programado, en vuelo, terminado, cancelado
-
-    CONSTRAINT fk_avion FOREIGN KEY (avion_id) REFERENCES aviones (id),
-    CONSTRAINT fk_piloto FOREIGN KEY (piloto_id) REFERENCES pilotos (id),
-    CONSTRAINT fk_base_salida FOREIGN KEY (base_salida_id) REFERENCES bases (id),
-    CONSTRAINT fk_base_destino FOREIGN KEY (base_destino_id) REFERENCES bases (id),
-    CONSTRAINT chk_fechas CHECK (fecha_llegada > fecha_salida)
+-- Tabla TRIPULACIÓN_VUELO
+CREATE TABLE TRIPULACION_VUELO (
+                                   num_vuelo VARCHAR(50),
+                                   codigo_miembro VARCHAR(50),
+                                   PRIMARY KEY (num_vuelo, codigo_miembro),
+                                   FOREIGN KEY (num_vuelo) REFERENCES VUELO(num_vuelo),
+                                   FOREIGN KEY (codigo_miembro) REFERENCES MIEMBRO(codigo_miembro)
 );
 
-CREATE INDEX idx_vuelo_fechas ON vuelos (fecha_salida);
 
--- ============================================
--- TABLA: TRIPULACIÓN ASIGNADA A VUELOS
--- ============================================
-CREATE TABLE vuelo_tripulacion
-(
-    vuelo_id       INTEGER NOT NULL,
-    tripulacion_id INTEGER NOT NULL,
 
-    PRIMARY KEY (vuelo_id, tripulacion_id),
+DROP TABLE IF EXISTS TRIPULACION_VUELO;
+DROP TABLE IF EXISTS VUELO;
+DROP TABLE IF EXISTS PILOTO;
+DROP TABLE IF EXISTS MIEMBRO;
+DROP TABLE IF EXISTS AVION;
+DROP TABLE IF EXISTS PERSONA;
+DROP TABLE IF EXISTS BASE;
 
-    CONSTRAINT fk_vuelo FOREIGN KEY (vuelo_id) REFERENCES vuelos (id) ON DELETE CASCADE,
-    CONSTRAINT fk_tripulacion FOREIGN KEY (tripulacion_id) REFERENCES tripulacion (id)
-);
+
+select * from base;

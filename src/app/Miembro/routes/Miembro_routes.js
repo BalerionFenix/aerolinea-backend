@@ -1,5 +1,4 @@
 import {Router} from 'express'
-import {pool} from "../../../config/config_db.js";
 
 
 

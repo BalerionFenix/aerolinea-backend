@@ -1,14 +1,13 @@
-import pg from 'pg';
+import { Sequelize } from "sequelize";
 
-export const pool = new pg.Pool({
-    user: "postgres",
-    host: "localhost",
-    password: "12345",
-    database: "aerolinea_db",
-    port: "5432",
+ const sequelize = new Sequelize(
+    "aerolinea_db",
+    "postgres",
+    "12345",
+    {
+        host: "localhost",
+        dialect: "postgres",
     }
-)
+);
 
-pool.query('SELECT NOW()').then(result => {
-    console.log(result);
-})
+ export default sequelize;
