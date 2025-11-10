@@ -1,4 +1,4 @@
-import express, {json} from "express";
+import express from "express";
 import baseRouter from "./app/Base/routes/baseRouter.js";
 
 const app = express();

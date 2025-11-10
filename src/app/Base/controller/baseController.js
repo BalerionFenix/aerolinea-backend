@@ -32,7 +32,6 @@ export const getBase = async (req, res) => {
     try {
         const { id } = req.params;
         const base = await BaseDAO.getById(id);
-
         if (!base) return res.status(404).json({ message: "Base not found" });
 
         res.json(new BaseOutputDTO(base));
@@ -47,8 +46,11 @@ export const updateBase = async (req, res) => {
         const { id } = req.params;
         const updateData = new BaseUpdateDTO(req.body);
 
-        const base = await BaseDAO.update(id, updateData);
+        if(!updateData.nuevoNombre || !updateData.ciudad || !updateData.pais) {
+            return res.status(400).json({ message: "Name, city, and country are required" });
+        }
 
+        const base = await BaseDAO.update(id, updateData);
         if (!base) return res.status(404).json({ message: "Base not found" });
 
         res.json(new BaseOutputDTO(base));

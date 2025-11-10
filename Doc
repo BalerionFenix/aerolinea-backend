@@ -32,3 +32,7 @@ routes/
 Define las rutas de Express para Base (GET /bases, POST /bases, etc.).
 
 Solo importa el controlador y asigna los endpoints.
+
+
+
+si se borra la base donde esta asignado el usario, que lo reasigne a la base principal con el id oo1;

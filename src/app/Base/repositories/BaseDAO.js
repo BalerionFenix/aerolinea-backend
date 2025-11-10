@@ -17,11 +17,11 @@ class BaseDAO {
     }
 
     // Actualizar una base existente por id
+
     async update(id, updateData) {
         const base = await Base.findByPk(id);
         if (!base) return null;
 
-        // Actualizamos solo los campos que vienen en updateData
         Object.keys(updateData).forEach(key => {
             if (updateData[key] !== undefined) {
                 base[key] = updateData[key];
@@ -33,10 +33,10 @@ class BaseDAO {
     }
 
     // Eliminar una base por id
+
     async delete(id) {
         const base = await Base.findByPk(id);
         if (!base) return null;
-
         await base.destroy();
         return true;
     }

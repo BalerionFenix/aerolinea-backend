@@ -25,6 +25,10 @@ export const CreateBaseSchema = Joi.object({
     direccion: Joi.string().max(255).allow("").optional().messages({
         "string.base": "La dirección debe ser un texto",
         "string.max": "La dirección debe tener máximo 255 caracteres"
+    }),
+    estado: Joi.string().valid("Activo", "Inactivo").default("Activo").messages({
+        "string.base": "El estado debe ser un texto",
+        "any.only": "El estado solo puede ser 'Activo' o 'Inactivo'"
     })
 });
 
@@ -47,6 +51,10 @@ export const UpdateBaseSchema = Joi.object({
     direccion: Joi.string().max(255).allow("").optional().messages({
         "string.base": "La dirección debe ser un texto",
         "string.max": "La dirección debe tener máximo 255 caracteres"
+    }),
+    estado: Joi.string().valid("Activo", "Inactivo").optional().messages({
+        "string.base": "El estado debe ser un texto",
+        "any.only": "El estado solo puede ser 'Activo' o 'Inactivo'"
     })
 });
 

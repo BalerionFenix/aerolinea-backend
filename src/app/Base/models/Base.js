@@ -23,6 +23,11 @@ const Base = sequelize.define("Base", {
     direccion: {
         type: DataTypes.STRING(255),
         allowNull: true,
+    },
+    estado: {
+        type: DataTypes.ENUM("Activo", "Inactivo"),
+        allowNull: false,
+        defaultValue: "Activo",
     }
 }, {
     tableName: "base",
