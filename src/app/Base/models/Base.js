@@ -2,7 +2,7 @@ import sequelize from "../../../config/config_db.js";
 import { DataTypes } from "sequelize";
 
 const Base = sequelize.define("Base", {
-    id: {
+    base_codigo: {
         type: DataTypes.INTEGER,
         autoIncrement: true,
         primaryKey: true,
@@ -23,6 +23,11 @@ const Base = sequelize.define("Base", {
     direccion: {
         type: DataTypes.STRING(255),
         allowNull: true,
+    },
+    estado: {
+        type: DataTypes.ENUM("Activo", "Inactivo"),
+        allowNull: false,
+        defaultValue: "Activo",
     }
 }, {
     tableName: "base",

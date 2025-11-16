@@ -1,10 +1,12 @@
 import app from "./app.js";
 import {PORT} from "./config/config.js"
 import sequelize from "./config/config_db.js";
-import Base from "./app/Base/models/Base.js";
+import {setupAssociations} from "./app/associations.js";
+
 
 
 async function startServer() {
+    setupAssociations();
     await sequelize.sync();
     console.log('All models were synchronized successfully.');
 
