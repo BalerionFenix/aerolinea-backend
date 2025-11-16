@@ -2,7 +2,7 @@ import sequelize from "../../../config/config_db.js";
 import { DataTypes } from "sequelize";
 
 const Base = sequelize.define("Base", {
-    id: {
+    base_codigo: {
         type: DataTypes.INTEGER,
         autoIncrement: true,
         primaryKey: true,

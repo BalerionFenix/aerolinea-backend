@@ -32,7 +32,7 @@ export const getBase = async (req, res) => {
     try {
         const { id } = req.params;
         const base = await BaseDAO.getById(id);
-        if (!base) return res.status(404).json({ message: "Base not found" });
+        if (!base) return res.status(404).json({ message: "Usuario not found" });
 
         res.json(new BaseOutputDTO(base));
     } catch (err) {
@@ -51,7 +51,7 @@ export const updateBase = async (req, res) => {
         }
 
         const base = await BaseDAO.update(id, updateData);
-        if (!base) return res.status(404).json({ message: "Base not found" });
+        if (!base) return res.status(404).json({ message: "Usuario not found" });
 
         res.json(new BaseOutputDTO(base));
     } catch (err) {
@@ -65,9 +65,9 @@ export const deleteBase = async (req, res) => {
         const { id } = req.params;
         const result = await BaseDAO.delete(id);
 
-        if (!result) return res.status(404).json({ message: "Base not found" });
+        if (!result) return res.status(404).json({ message: "Usuario not found" });
 
-        res.json({ message: "Base deleted successfully" });
+        res.json({ message: "Usuario deleted successfully" });
     } catch (err) {
         res.status(500).json({ message: "Error deleting base", error: err });
     }

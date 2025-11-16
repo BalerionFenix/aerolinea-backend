@@ -17,7 +17,7 @@ Centraliza validación y transformación de datos.
 
 models/
 
-Archivos de Sequelize que representan las tablas (Base.js).
+Archivos de Sequelize que representan las tablas (Usuario.js).
 
 Definen columnas, tipos y relaciones.
 
@@ -29,7 +29,7 @@ Centraliza todas las operaciones con la DB (find, create, update, delete).
 
 routes/
 
-Define las rutas de Express para Base (GET /bases, POST /bases, etc.).
+Define las rutas de Express para Usuario (GET /bases, POST /bases, etc.).
 
 Solo importa el controlador y asigna los endpoints.
 
