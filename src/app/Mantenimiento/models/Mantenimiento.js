@@ -15,14 +15,14 @@ const Mantenimiento = sequelize.define('Mantenimiento', {
             key: 'id'
         }
     },
-    aeronave_id: {
+  /*  aeronave_id: {
         type: DataTypes.INTEGER,
         allowNull: false,
         references: {
             model: 'aeronaves', // Asumiendo que existe este modelo
             key: 'id'
         }
-    },
+    },*/
     fecha_programada: {
         type: DataTypes.DATE,
         allowNull: false
@@ -66,4 +66,4 @@ const Mantenimiento = sequelize.define('Mantenimiento', {
     timestamps: true
 });
 
-module.exports = Mantenimiento;
+export default Mantenimiento;

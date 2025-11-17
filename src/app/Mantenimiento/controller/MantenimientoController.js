@@ -1,283 +1,138 @@
-const MantenimientoDAO = require('../dao/MantenimientoDAO'); // Cambio aquí
-const { MantenimientoDTO } = require('../dto/MantenimientoDTO');
-const { validationResult } = require('express-validator');
+import MantenimientoDAO from "../repositories/MantenimientoDAO.js";
+import {MantenimientoOutputDTO, MantenimientoInputDTO, MantenimientoUpdateDTO} from "../dto/MantenimientoDTO .js";
 
-class MantenimientoController {
-    
-    static async crearMantenimiento(req, res) {
-        try {
-            const errors = validationResult(req);
-            if (!errors.isEmpty()) {
-                return res.status(400).json({
-                    success: false,
-                    errors: errors.array()
-                });
-            }
-
-            const mantenimiento = await MantenimientoDAO.crear(req.body); // Cambio aquí
-            const mantenimientoDTO = new MantenimientoDTO(mantenimiento);
-            
-            res.status(201).json({
-                success: true,
-                message: 'Mantenimiento creado exitosamente',
-                data: mantenimientoDTO
-            });
-        } catch (error) {
-            console.error('Error al crear mantenimiento:', error);
-            res.status(500).json({
-                success: false,
-                message: 'Error interno del servidor',
-                error: error.message
-            });
-        }
+// Crear mantenimiento
+export const crearMantenimiento = async (req, res) => {
+    try {
+        const inputDTO = new MantenimientoInputDTO(req.body);
+        const mantenimiento = await MantenimientoDAO.create(inputDTO);
+        res.status(201).json({
+            success: true,
+            message: "Mantenimiento creado exitosamente",
+            data: new MantenimientoOutputDTO(mantenimiento)
+        });
+    } catch (error) {
+        res.status(500).json({ success: false, message: "Error interno del servidor", error: error.message });
     }
+};
 
-    static async obtenerMantenimientos(req, res) {
-        try {
-            const errors = validationResult(req);
-            if (!errors.isEmpty()) {
-                return res.status(400).json({
-                    success: false,
-                    errors: errors.array()
-                });
-            }
 
-            const { pagina = 1, limite = 10, estado, aeronave_id } = req.query;
-            
-            let resultado;
-            if (estado) {
-                resultado = await MantenimientoDAO.obtenerPorEstado(estado); // Cambio aquí
-            } else if (aeronave_id) {
-                resultado = await MantenimientoDAO.obtenerPorAeronave(aeronave_id); // Cambio aquí
-            } else {
-                resultado = await MantenimientoDAO.obtenerTodos(pagina, limite); // Cambio aquí
-            }
-            
-            // Convertir a DTOs
-            if (resultado.mantenimientos) {
-                resultado.mantenimientos = MantenimientoDTO.fromArray(resultado.mantenimientos);
-            } else {
-                resultado = MantenimientoDTO.fromArray(resultado);
-            }
-            
-            res.json({
-                success: true,
-                data: resultado
-            });
-        } catch (error) {
-            console.error('Error al obtener mantenimientos:', error);
-            res.status(500).json({
-                success: false,
-                message: 'Error interno del servidor',
-                error: error.message
-            });
+// Obtener todos los mantenimientos con filtros opcionales
+export const obtenerMantenimientos = async (req, res) => {
+    try {
+        const { pagina = 1, limite = 10, estado, aeronave_id } = req.query;
+        let resultado;
+
+        if (estado) {
+            resultado = await MantenimientoDAO.getByEstado(estado);
+        } else if (aeronave_id) {
+            resultado = await MantenimientoDAO.getByAeronave(aeronave_id);
+        } else {
+            resultado = await MantenimientoDAO.getAll(pagina, limite);
         }
-    }
 
-    static async obtenerMantenimiento(req, res) {
-        try {
-            const errors = validationResult(req);
-            if (!errors.isEmpty()) {
-                return res.status(400).json({
-                    success: false,
-                    errors: errors.array()
-                });
-            }
-
-            const { id } = req.params;
-            const mantenimiento = await MantenimientoDAO.obtenerPorId(id); // Cambio aquí
-            
-            if (!mantenimiento) {
-                return res.status(404).json({
-                    success: false,
-                    message: 'Mantenimiento no encontrado'
-                });
-            }
-
-            const mantenimientoDTO = new MantenimientoDTO(mantenimiento);
-
-            res.json({
-                success: true,
-                data: mantenimientoDTO
-            });
-        } catch (error) {
-            console.error('Error al obtener mantenimiento:', error);
-            res.status(500).json({
-                success: false,
-                message: 'Error interno del servidor',
-                error: error.message
-            });
+        // Normalizar salida
+        if (resultado.mantenimientos) {
+            resultado.mantenimientos = MantenimientoOutputDTO.fromArray(resultado.mantenimientos);
+        } else {
+            resultado = MantenimientoOutputDTO.fromArray(resultado);
         }
+
+        res.json({ success: true, data: resultado });
+    } catch (error) {
+        res.status(500).json({ success: false, message: "Error interno del servidor", error: error.message });
     }
+};
 
-    static async actualizarMantenimiento(req, res) {
-        try {
-            const errors = validationResult(req);
-            if (!errors.isEmpty()) {
-                return res.status(400).json({
-                    success: false,
-                    errors: errors.array()
-                });
-            }
+// Obtener mantenimiento por id
+export const obtenerMantenimiento = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const mantenimiento = await MantenimientoDAO.getById(id);
 
-            const { id } = req.params;
-            const mantenimiento = await MantenimientoDAO.actualizar(id, req.body); // Cambio aquí
-            
-            if (!mantenimiento) {
-                return res.status(404).json({
-                    success: false,
-                    message: 'Mantenimiento no encontrado'
-                });
-            }
+        if (!mantenimiento) return res.status(404).json({ success: false, message: "Mantenimiento no encontrado" });
 
-            const mantenimientoDTO = new MantenimientoDTO(mantenimiento);
-
-            res.json({
-                success: true,
-                message: 'Mantenimiento actualizado exitosamente',
-                data: mantenimientoDTO
-            });
-        } catch (error) {
-            console.error('Error al actualizar mantenimiento:', error);
-            res.status(500).json({
-                success: false,
-                message: 'Error interno del servidor',
-                error: error.message
-            });
-        }
+        res.json({ success: true, data: new MantenimientoOutputDTO(mantenimiento) });
+    } catch (error) {
+        res.status(500).json({ success: false, message: "Error interno del servidor", error: error.message });
     }
+};
 
-    static async eliminarMantenimiento(req, res) {
-        try {
-            const errors = validationResult(req);
-            if (!errors.isEmpty()) {
-                return res.status(400).json({
-                    success: false,
-                    errors: errors.array()
-                });
-            }
+// Actualizar mantenimiento
+export const actualizarMantenimiento = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const updateDTO = new MantenimientoUpdateDTO(req.body);
+        const mantenimiento = await MantenimientoDAO.update(id, updateDTO);
 
-            const { id } = req.params;
-            const eliminado = await MantenimientoDAO.eliminar(id); // Cambio aquí
-            
-            if (!eliminado) {
-                return res.status(404).json({
-                    success: false,
-                    message: 'Mantenimiento no encontrado'
-                });
-            }
+        if (!mantenimiento)
+            return res.status(404).json({ success: false, message: "Mantenimiento no encontrado" });
 
-            res.json({
-                success: true,
-                message: 'Mantenimiento eliminado exitosamente'
-            });
-        } catch (error) {
-            console.error('Error al eliminar mantenimiento:', error);
-            res.status(500).json({
-                success: false,
-                message: 'Error interno del servidor',
-                error: error.message
-            });
-        }
+        res.json({
+            success: true,
+            message: "Mantenimiento actualizado exitosamente",
+            data: new MantenimientoOutputDTO(mantenimiento)
+        });
+    } catch (error) {
+        res.status(500).json({ success: false, message: "Error interno del servidor", error: error.message });
     }
+};
 
-    static async obtenerMantenimientosPorAeronave(req, res) {
-        try {
-            const { aeronaveId } = req.params;
-            const mantenimientos = await MantenimientoDAO.obtenerPorAeronave(aeronaveId); // Cambio aquí
-            const mantenimientosDTO = MantenimientoDTO.fromArray(mantenimientos);
-            
-            res.json({
-                success: true,
-                data: mantenimientosDTO
-            });
-        } catch (error) {
-            console.error('Error al obtener mantenimientos por aeronave:', error);
-            res.status(500).json({
-                success: false,
-                message: 'Error interno del servidor',
-                error: error.message
-            });
-        }
+
+
+// Eliminar mantenimiento
+export const eliminarMantenimiento = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const eliminado = await MantenimientoDAO.delete(id);
+
+        if (!eliminado) return res.status(404).json({ success: false, message: "Mantenimiento no encontrado" });
+
+        res.json({ success: true, message: "Mantenimiento eliminado exitosamente" });
+    } catch (error) {
+        res.status(500).json({ success: false, message: "Error interno del servidor", error: error.message });
     }
+};
 
-    static async obtenerMantenimientosPorEstado(req, res) {
-        try {
-            const { estado } = req.params;
-            const mantenimientos = await MantenimientoDAO.obtenerPorEstado(estado); // Cambio aquí
-            const mantenimientosDTO = MantenimientoDTO.fromArray(mantenimientos);
-            
-            res.json({
-                success: true,
-                data: mantenimientosDTO
-            });
-        } catch (error) {
-            console.error('Error al obtener mantenimientos por estado:', error);
-            res.status(500).json({
-                success: false,
-                message: 'Error interno del servidor',
-                error: error.message
-            });
-        }
+// Obtener mantenimientos por aeronave
+export const obtenerMantenimientosPorAeronave = async (req, res) => {
+    try {
+        const { aeronaveId } = req.params;
+        const mantenimientos = await MantenimientoDAO.getByAeronave(aeronaveId);
+        res.json({ success: true, data: MantenimientoOutputDTO.fromArray(mantenimientos) });
+    } catch (error) {
+        res.status(500).json({ success: false, message: "Error interno del servidor", error: error.message });
     }
+};
 
-    static async obtenerEstadisticasMantenimiento(req, res) {
-        try {
-            const estadisticas = await MantenimientoDAO.obtenerEstadisticas(); // Cambio aquí
-
-            res.json({
-                success: true,
-                data: estadisticas
-            });
-        } catch (error) {
-            console.error('Error al obtener estadísticas:', error);
-            res.status(500).json({
-                success: false,
-                message: 'Error interno del servidor',
-                error: error.message
-            });
-        }
+// Obtener mantenimientos por estado
+export const obtenerMantenimientosPorEstado = async (req, res) => {
+    try {
+        const { estado } = req.params;
+        const mantenimientos = await MantenimientoDAO.getByEstado(estado);
+        res.json({ success: true, data: MantenimientoOutputDTO.fromArray(mantenimientos) });
+    } catch (error) {
+        res.status(500).json({ success: false, message: "Error interno del servidor", error: error.message });
     }
+};
 
-    static async obtenerProximosMantenimientos(req, res) {
-        try {
-            const { limite = 5 } = req.query;
-            const mantenimientos = await MantenimientoDAO.obtenerProximos(limite); // Cambio aquí
-            const mantenimientosDTO = MantenimientoDTO.fromArray(mantenimientos);
-
-            res.json({
-                success: true,
-                data: mantenimientosDTO
-            });
-        } catch (error) {
-            console.error('Error al obtener próximos mantenimientos:', error);
-            res.status(500).json({
-                success: false,
-                message: 'Error interno del servidor',
-                error: error.message
-            });
-        }
+// Obtener estadísticas de mantenimientos
+export const obtenerEstadisticasMantenimiento = async (req, res) => {
+    try {
+        const estadisticas = await MantenimientoDAO.getEstadisticas();
+        res.json({ success: true, data: estadisticas });
+    } catch (error) {
+        res.status(500).json({ success: false, message: "Error interno del servidor", error: error.message });
     }
-}
+};
 
-module.exports = MantenimientoController;
-// Exportar TODOS los modelos para uso externo si es necesario
-module.exports = {
-    setupAssociations,
-    // Modelos Base
-    Aeronave,
-    Vuelo,
-    // Modelos Person
-    Usuario,
-    Piloto,
-    // Modelos Miembro
-    Miembro,
-    // Modelos Mantenimiento
-    Mantenimiento,
-    TipoMantenimiento,
-    MantenimientoController,
-    TipoMantenimientoController,
-    MantenimientoDAO,
-    TipoMantenimientoDAO, // Exportamos el nuevo DAO
-    mantenimientoRoutes
+// Obtener próximos mantenimientos
+export const obtenerProximosMantenimientos = async (req, res) => {
+    try {
+        const { limite = 5 } = req.query;
+        const mantenimientos = await MantenimientoDAO.getProximos(limite);
+        res.json({ success: true, data: MantenimientoOutputDTO.fromArray(mantenimientos) });
+    } catch (error) {
+        res.status(500).json({ success: false, message: "Error interno del servidor", error: error.message });
+    }
 };

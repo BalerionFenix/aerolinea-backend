@@ -1,196 +1,117 @@
-const { Mantenimiento, TipoMantenimiento, Aeronave } = require('../../../models/associations');
+import { Sequelize } from 'sequelize';
+import Mantenimiento from "../models/Mantenimiento.js";
+import TipoMantenimiento from "../models/TipoMantenimiento.js";
 
 class MantenimientoDAO {
-    
-    static async crear(mantenimientoData) {
-        try {
-            return await Mantenimiento.create(mantenimientoData);
-        } catch (error) {
-            throw error;
-        }
+
+    constructor() {
+        this.includeAeronaveTipo = [
+            { model: TipoMantenimiento, as: 'tipo_mantenimiento', attributes: ['id', 'nombre', 'descripcion'] },
+      //      { model: Aeronave, as: 'aeronave', attributes: ['id', 'matricula', 'modelo'] }
+        ];
+
+        this.includeTipo = [
+            { model: TipoMantenimiento, as: 'tipo_mantenimiento', attributes: ['id', 'nombre', 'descripcion'] }
+        ];
     }
 
-    static async obtenerTodos(pagina = 1, limite = 10) {
-        try {
-            const offset = (pagina - 1) * limite;
-            const { count, rows } = await Mantenimiento.findAndCountAll({
-                include: [
-                    {
-                        model: TipoMantenimiento,
-                        as: 'tipo_mantenimiento',
-                        attributes: ['id', 'nombre', 'descripcion']
-                    },
-                    {
-                        model: Aeronave,
-                        as: 'aeronave',
-                        attributes: ['id', 'matricula', 'modelo']
-                    }
-                ],
-                limit: limite,
-                offset: offset,
-                order: [['fecha_programada', 'DESC']]
-            });
-
-            return {
-                total: count,
-                pagina: parseInt(pagina),
-                totalPaginas: Math.ceil(count / limite),
-                mantenimientos: rows
-            };
-        } catch (error) {
-            throw error;
-        }
+    async create(data) {
+        return await Mantenimiento.create(data);
     }
 
-    static async obtenerPorId(id) {
-        try {
-            return await Mantenimiento.findByPk(id, {
-                include: [
-                    {
-                        model: TipoMantenimiento,
-                        as: 'tipo_mantenimiento'
-                    },
-                    {
-                        model: Aeronave,
-                        as: 'aeronave'
-                    }
-                ]
-            });
-        } catch (error) {
-            throw error;
-        }
+    async getAll(pagina = 1, limite = 10) {
+        const offset = (pagina - 1) * limite;
+
+        const { count, rows } = await Mantenimiento.findAndCountAll({
+            include: this.includeAeronaveTipo,
+            limit: limite,
+            offset: offset,
+            order: [['fecha_programada', 'DESC']]
+        });
+
+        return {
+            total: count,
+            pagina: parseInt(pagina),
+            totalPaginas: Math.ceil(count / limite),
+            mantenimientos: rows
+        };
     }
 
-    static async actualizar(id, mantenimientoData) {
-        try {
-            const mantenimiento = await Mantenimiento.findByPk(id);
-            if (!mantenimiento) {
-                return null;
-            }
-            await mantenimiento.update(mantenimientoData);
-            return mantenimiento;
-        } catch (error) {
-            throw error;
-        }
+    async getById(id) {
+        return await Mantenimiento.findByPk(id, { include: this.includeAeronaveTipo });
     }
 
-    static async eliminar(id) {
-        try {
-            const mantenimiento = await Mantenimiento.findByPk(id);
-            if (!mantenimiento) {
-                return false;
-            }
-            await mantenimiento.destroy();
-            return true;
-        } catch (error) {
-            throw error;
-        }
+    async update(id, data) {
+        const mantenimiento = await Mantenimiento.findByPk(id);
+        if (!mantenimiento) return null;
+
+        Object.keys(data).forEach(key => {
+            if (data[key] !== undefined) mantenimiento[key] = data[key];
+        });
+
+        await mantenimiento.save();
+        return mantenimiento;
     }
 
-    static async obtenerPorAeronave(aeronaveId) {
-        try {
-            return await Mantenimiento.findAll({
-                where: { aeronave_id: aeronaveId },
-                include: [
-                    {
-                        model: TipoMantenimiento,
-                        as: 'tipo_mantenimiento'
-                    }
-                ],
-                order: [['fecha_programada', 'DESC']]
-            });
-        } catch (error) {
-            throw error;
-        }
+
+    async delete(id) {
+        const mantenimiento = await Mantenimiento.findByPk(id);
+        if (!mantenimiento) return null;
+
+        await mantenimiento.destroy();
+        return true;
     }
 
-    static async obtenerPorEstado(estado) {
-        try {
-            return await Mantenimiento.findAll({
-                where: { estado },
-                include: [
-                    {
-                        model: TipoMantenimiento,
-                        as: 'tipo_mantenimiento'
-                    },
-                    {
-                        model: Aeronave,
-                        as: 'aeronave'
-                    }
-                ],
-                order: [['fecha_programada', 'DESC']]
-            });
-        } catch (error) {
-            throw error;
-        }
+    async getByAeronave(aeronaveId) {
+        return await Mantenimiento.findAll({
+            where: { aeronave_id: aeronaveId },
+            include: this.includeTipo,
+            order: [['fecha_programada', 'DESC']]
+        });
     }
 
-    static async obtenerProximos(limite = 5) {
-        try {
-            const mantenimientos = await Mantenimiento.findAll({
-                where: { estado: 'programado' },
-                include: [
-                    {
-                        model: TipoMantenimiento,
-                        as: 'tipo_mantenimiento',
-                        attributes: ['id', 'nombre']
-                    },
-                    {
-                        model: Aeronave,
-                        as: 'aeronave',
-                        attributes: ['id', 'matricula', 'modelo']
-                    }
-                ],
-                order: [['fecha_programada', 'ASC']],
-                limit: parseInt(limite)
-            });
-            return mantenimientos;
-        } catch (error) {
-            throw error;
-        }
+    async getByEstado(estado) {
+        return await Mantenimiento.findAll({
+            where: { estado },
+            include: this.includeAeronaveTipo,
+            order: [['fecha_programada', 'DESC']]
+        });
     }
 
-    static async obtenerEstadisticas() {
-        try {
-            const mantenimientos = await Mantenimiento.findAll();
-            
-            const estadisticas = {
-                total: mantenimientos.length,
-                programados: mantenimientos.filter(m => m.estado === 'programado').length,
-                en_proceso: mantenimientos.filter(m => m.estado === 'en_proceso').length,
-                completados: mantenimientos.filter(m => m.estado === 'completado').length,
-                cancelados: mantenimientos.filter(m => m.estado === 'cancelado').length
-            };
-
-            return estadisticas;
-        } catch (error) {
-            throw error;
-        }
+    async getProximos(limite = 5) {
+        return await Mantenimiento.findAll({
+            where: { estado: 'programado' },
+            include: this.includeAeronaveTipo,
+            order: [['fecha_programada', 'ASC']],
+            limit: parseInt(limite)
+        });
     }
 
-    static async contarPorTipoMantenimiento() {
-        try {
-            const resultados = await Mantenimiento.findAll({
-                attributes: [
-                    'tipo_mantenimiento_id',
-                    [Sequelize.fn('COUNT', Sequelize.col('id')), 'total']
-                ],
-                group: ['tipo_mantenimiento_id'],
-                include: [
-                    {
-                        model: TipoMantenimiento,
-                        as: 'tipo_mantenimiento',
-                        attributes: ['id', 'nombre']
-                    }
-                ],
-                raw: true
-            });
+    async getEstadisticas() {
+        const mantenimientos = await Mantenimiento.findAll();
+        const estados = ['programado', 'en_proceso', 'completado', 'cancelado'];
 
-            return resultados;
-        } catch (error) {
-            throw error;
-        }
+        const estadisticas = { total: mantenimientos.length };
+        estados.forEach(e => {
+            estadisticas[e] = mantenimientos.filter(m => m.estado === e).length;
+        });
+
+        return estadisticas;
+    }
+
+    async countByTipoMantenimiento() {
+        return await Mantenimiento.findAll({
+            attributes: [
+                'tipo_mantenimiento_id',
+                [Sequelize.fn('COUNT', Sequelize.col('id')), 'total']
+            ],
+            group: ['tipo_mantenimiento_id'],
+            include: [
+                { model: TipoMantenimiento, as: 'tipo_mantenimiento', attributes: ['id', 'nombre'] }
+            ],
+            raw: true
+        });
     }
 }
 
-module.exports = MantenimientoDAO;
+export default new MantenimientoDAO();

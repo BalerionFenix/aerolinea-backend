@@ -59,7 +59,7 @@ export const UpdateBaseSchema = Joi.object({
 });
 
 export const IdParamSchema = Joi.object({
-    id: Joi.number().integer().required().messages({
+    base_codigo: Joi.number().integer().required().messages({
         "number.base": "El ID debe ser un número",
         "number.integer": "El ID debe ser un número entero",
         "any.required": "El ID es requerido"

@@ -23,7 +23,7 @@ export class BaseUpdateDTO {
 // DTO de salida
 export class BaseOutputDTO {
     constructor(base) {
-        this.id = base.id;
+        this.base_codigo = base.base_codigo;
         this.nombre = base.nombre;
         this.ciudad = base.ciudad;
         this.pais = base.pais;

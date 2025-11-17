@@ -1,22 +1,19 @@
 import Base from "../models/Base.js";
 
 class BaseDAO {
-    // Obtener todas las bases
+
     async getAll() {
         return await Base.findAll();
     }
 
-    // Obtener una base por id
     async getById(id) {
         return await Base.findByPk(id);
     }
 
-    // Crear una nueva base
     async create(baseData) {
         return  Base.create(baseData);
     }
 
-    // Actualizar una base existente por id
 
     async update(id, updateData) {
         const base = await Base.findByPk(id);
@@ -32,7 +29,6 @@ class BaseDAO {
         return base;
     }
 
-    // Eliminar una base por id
 
     async delete(id) {
         const base = await Base.findByPk(id);

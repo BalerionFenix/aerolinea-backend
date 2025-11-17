@@ -1,5 +1,6 @@
-const { TipoMantenimiento, Mantenimiento } = require('../../../models/associations');
-const { Sequelize } = require('sequelize');
+import Mantenimiento from "../models/Mantenimiento.js";
+import TipoMantenimiento from "../models/TipoMantenimiento.js";
+import { Sequelize } from 'sequelize';
 
 class TipoMantenimientoDAO {
 
@@ -148,4 +149,4 @@ class TipoMantenimientoDAO {
     }
 }
 
-module.exports = TipoMantenimientoDAO;
+export default new TipoMantenimientoDAO();

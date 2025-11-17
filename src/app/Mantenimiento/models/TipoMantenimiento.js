@@ -28,8 +28,8 @@ const TipoMantenimiento = sequelize.define('TipoMantenimiento', {
         defaultValue: true
     }
 }, {
-    tableName: 'tipo_mantenimientos', // 🆕 Cambiado para consistencia
+    tableName: 'tipo_mantenimientos',
     timestamps: true
 });
 
-module.exports = TipoMantenimiento;
+export default TipoMantenimiento;
