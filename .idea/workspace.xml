@@ -5,13 +5,21 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6d04e158-b4eb-4d39-8478-389d543dc231" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/app/Base/controller/avionController.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/app/Base/dto/AvionDTO.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/app/Base/models/Avion.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/app/Base/repositories/AvionDAO.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/app/Base/routes/avionRouter.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/app/Base/validators/avionValidator.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/53aae81e-669d-4af3-b8b6-bcc5ad0cb74f.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/53aae81e-669d-4af3-b8b6-bcc5ad0cb74f/storage_v2/_src_/database/aerolinea_db.cc_JAQ.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/53aae81e-669d-4af3-b8b6-bcc5ad0cb74f/storage_v2/_src_/database/aerolinea_db.cc_JAQ/schema/information_schema.FNRwLQ.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/53aae81e-669d-4af3-b8b6-bcc5ad0cb74f/storage_v2/_src_/database/aerolinea_db.cc_JAQ/schema/pg_catalog.0S1ZNQ.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/53aae81e-669d-4af3-b8b6-bcc5ad0cb74f/storage_v2/_src_/database/aerolinea_db.cc_JAQ/schema/public.abK9xQ.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/data_source_mapping.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/data_source_mapping.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/app.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/Base/controller/baseController.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/Base/controller/baseController.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/Base/dto/BaseDTO.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/Base/dto/BaseDTO.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/Base/models/Avion.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/Base/models/Avion.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/Base/validators/baseValidator.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/Base/validators/baseValidator.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/db/aerolinea.sql" beforeDir="false" afterPath="$PROJECT_DIR$/src/db/aerolinea.sql" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -39,33 +47,34 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "main",
-    "ignore.virus.scanning.warn.message": "true",
-    "last_opened_file_path": "C:/Users/davie/OneDrive/Documentos/Aero_peter/aerolinea-backend",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "ts.external.directory.path": "C:\\Program Files\\JetBrains\\WebStorm 2025.2.4\\plugins\\javascript-plugin\\jsLanguageServicesImpl\\external",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/davie/OneDrive/Documentos/Aero_peter/aerolinea-backend&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;swagger&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;C:\\Program Files\\JetBrains\\WebStorm 2025.2.1\\plugins\\javascript-plugin\\jsLanguageServicesImpl\\external&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
-  "keyToStringList": {
-    "DatabaseDriversLRU": [
-      "postgresql"
+  &quot;keyToStringList&quot;: {
+    &quot;DatabaseDriversLRU&quot;: [
+      &quot;postgresql&quot;
     ]
   }
-}]]></component>
+}</component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-js-predefined-d6986cc7102b-3aa1da707db6-JavaScript-WS-252.27397.92" />
+        <option value="bundled-js-predefined-d6986cc7102b-b598e85cdad2-JavaScript-WS-252.25557.126" />
       </set>
     </attachedChunks>
   </component>
@@ -83,10 +92,26 @@
       <workItem from="1763169312348" duration="3776000" />
       <workItem from="1763231749075" duration="4558000" />
       <workItem from="1763313316013" duration="7264000" />
+      <workItem from="1763347737993" duration="471000" />
+      <workItem from="1763355619902" duration="11000" />
+      <workItem from="1763355889337" duration="8306000" />
+      <workItem from="1763408996074" duration="13442000" />
+      <workItem from="1763443876560" duration="682000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
 </project>

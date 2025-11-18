@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-
-    <data-source source="LOCAL" name="aerolinea_db@localhost" uuid="b39d5198-a0be-4cd9-8511-44e6655ed9c8">
-
+    <data-source source="LOCAL" name="aerolinea_db@localhost" uuid="d18b5c50-09da-4b58-802a-ef114fd655c4">
       <driver-ref>postgresql</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>org.postgresql.Driver</jdbc-driver>

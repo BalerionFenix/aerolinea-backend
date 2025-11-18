@@ -1,5 +1,6 @@
 import express from "express";
 import baseRouter from "./app/Base/routes/baseRouter.js";
+import avionRouter from "./app/Base/routes/avionRouter.js";
 
 import mantenimientoRouter from "./app/Mantenimiento/routes/mantenimientoRouter.js";
 import tipoMantenimientoRouter from "./app/Mantenimiento/routes/tipoMantenimientoRouter.js";
@@ -10,7 +11,7 @@ import cors from "cors";
 
 const app = express();
 app.use(express.json(), cors());
-app.use('/api', [baseRouter, mantenimientoRouter, tipoMantenimientoRouter, usuarioRouter, rolRouter]);
+app.use('/api', [baseRouter, mantenimientoRouter, tipoMantenimientoRouter, usuarioRouter, rolRouter, avionRouter]);
 
 
 export default app;

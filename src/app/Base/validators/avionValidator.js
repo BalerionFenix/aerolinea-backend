@@ -34,10 +34,11 @@ export const CreateAvionSchema = Joi.object({
         "number.min": "El año de fabricación no puede ser menor a 1900",
         "number.max": `El año de fabricación no puede ser mayor al año actual`
     }),
-    base_codigo: Joi.string().required().messages({
-        "string.base": "El código de base debe ser un texto",
-        "string.empty": "El código de base es requerido",
-        "any.required": "El código de base es requerido"
+    base_codigo: Joi.number().integer().min(1).required().messages({
+        "number.base": "El código de base debe ser un número",
+        "number.integer": "El código de base debe ser un número entero",
+        "number.min": "El código de base debe ser al menos 1",
+        "any.required": "El código de base es requerida"
     }),
     horas_vuelo_totales: Joi.number().integer().min(0).optional().messages({
         "number.base": "Las horas de vuelo deben ser un número",
@@ -73,8 +74,11 @@ export const UpdateAvionSchema = Joi.object({
         "number.min": "El año de fabricación no puede ser menor a 1900",
         "number.max": `El año de fabricación no puede ser mayor al año actual`
     }),
-    base_codigo: Joi.string().optional().messages({
-        "string.base": "El código de base debe ser un texto"
+    base_codigo: Joi.number().integer().min(1).required().messages({
+        "number.base": "El código de base debe ser un número",
+        "number.integer": "El código de base debe ser un número entero",
+        "number.min": "El código de base debe ser al menos 1",
+        "any.required": "El código de base es requerida"
     }),
     horas_vuelo_totales: Joi.number().integer().min(0).optional().messages({
         "number.base": "Las horas de vuelo deben ser un número",

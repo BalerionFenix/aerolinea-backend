@@ -5,6 +5,7 @@ import TipoMantenimiento from "./Mantenimiento/models/TipoMantenimiento.js";
 import Rol from "./Usuario/models/Rol.js";
 import Usuario from "./Usuario/models/Usuario.js";
 import Base from "./Base/models/Base.js";
+import Avion from "./Base/models/Avion.js";
 
 // Importaciones futuras de modelos que aún no existen
 // import Vuelo from '../modules/base/models/Vuelo.js';
@@ -43,19 +44,18 @@ export const setupAssociations = () => {
         });
 
         // =============================================
-        // RELACIONES DEL MÓDULO BASE (Aeronaves, Vuelos)
+        // RELACIONES DEL MÓDULO BASE (Aviones)
         // =============================================
 
-        // Aeronave ↔ Vuelo (Una aeronave tiene muchos vuelos)
-        /*Aeronave.hasMany(Vuelo, {
-            foreignKey: 'aeronave_id',
-            as: 'vuelos'
+        Base.hasMany(Avion, {
+            foreignKey: 'base_codigo',
+            as: 'aviones'
         });
 
-        Vuelo.belongsTo(Aeronave, {
-            foreignKey: 'aeronave_id',
-            as: 'aeronave'
-        });*/
+        Avion.belongsTo(Base, {
+            foreignKey: 'base_codigo',
+            as: 'base'
+        });
 
         // =============================================
         // RELACIONES DEL MÓDULO PERSON (Usuarios, Pilotos)

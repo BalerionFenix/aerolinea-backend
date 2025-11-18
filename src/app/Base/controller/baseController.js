@@ -46,7 +46,7 @@ export const updateBase = async (req, res) => {
         const { id } = req.params;
         const updateData = new BaseUpdateDTO(req.body);
 
-        if(!updateData.nuevoNombre || !updateData.ciudad || !updateData.pais) {
+        if(!updateData.nombre || !updateData.ciudad || !updateData.pais) {
             return res.status(400).json({ message: "Name, city, and country are required" });
         }
 

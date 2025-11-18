@@ -12,7 +12,7 @@ export class BaseInputDTO {
 // DTO de entrada para actualización
 export class BaseUpdateDTO {
     constructor(data) {
-        this.nuevoNombre = data.nuevoNombre;
+        this.nombre = data.nombre;
         this.ciudad = data.ciudad;
         this.pais = data.pais;
         this.direccion = data.direccion;

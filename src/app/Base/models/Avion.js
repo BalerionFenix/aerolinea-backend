@@ -2,7 +2,6 @@ import sequelize from "../../../config/config_db.js";
 import { DataTypes } from "sequelize";
 
 const Avion = sequelize.define("Avion", {
-
         avion_codigo: {
             type: DataTypes.INTEGER,
             autoIncrement: true,
@@ -29,7 +28,7 @@ const Avion = sequelize.define("Avion", {
             allowNull: true,
         },
         base_codigo: {
-            type: DataTypes.STRING,
+            type: DataTypes.INTEGER,
             allowNull: false,
         },
         estado: {
@@ -57,8 +56,8 @@ const Avion = sequelize.define("Avion", {
     {
         tableName: "avion",
         timestamps: true,
-        /*createdAt: "created_at",
-        updatedAt: "updated_at",*/
+        createdAt: "created_at",
+        updatedAt: "updated_at",
     }
 );
 
