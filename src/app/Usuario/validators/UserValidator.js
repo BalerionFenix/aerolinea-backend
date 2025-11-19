@@ -14,15 +14,15 @@ export const CreateUsuarioSchema = Joi.object({
         "string.email": "El email debe ser válido",
         "any.required": "El email es requerido"
     }),
-    rol_id: Joi.number().integer().required().messages({
+    rol_id: Joi.number().integer().empty("").default(2).messages({
         "number.base": "El rol debe ser un número",
-        "number.integer": "El rol debe ser un número entero",
-        "any.required": "El rol es requerido"
+        "number.integer": "El rol debe ser un número entero"
     }),
-    base_codigo: Joi.number().integer().optional().messages({
+    base_codigo: Joi.number().integer().optional().allow(null, "").messages({
         "number.base": "El código de base debe ser un número",
         "number.integer": "El código de base debe ser un número entero"
     }),
+
     persona_codigo: Joi.string().allow(null, "").optional().messages({
         "string.base": "El código de persona debe ser un texto"
     }),
@@ -40,11 +40,11 @@ export const UpdateUsuarioSchema = Joi.object({
         "string.base": "El email debe ser un texto",
         "string.email": "El email debe ser válido"
     }),
-    rol_id: Joi.number().integer().optional().messages({
+    rol_id: Joi.number().integer().empty("").default(2).messages({
         "number.base": "El rol debe ser un número",
         "number.integer": "El rol debe ser un número entero"
     }),
-    base_codigo: Joi.number().integer().optional().messages({
+    base_codigo: Joi.number().integer().optional().allow(null, "").messages({
         "number.base": "El código de base debe ser un número",
         "number.integer": "El código de base debe ser un número entero"
     }),

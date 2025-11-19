@@ -5,21 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6d04e158-b4eb-4d39-8478-389d543dc231" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/53aae81e-669d-4af3-b8b6-bcc5ad0cb74f.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/53aae81e-669d-4af3-b8b6-bcc5ad0cb74f/storage_v2/_src_/database/aerolinea_db.cc_JAQ.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/53aae81e-669d-4af3-b8b6-bcc5ad0cb74f/storage_v2/_src_/database/aerolinea_db.cc_JAQ/schema/information_schema.FNRwLQ.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/53aae81e-669d-4af3-b8b6-bcc5ad0cb74f/storage_v2/_src_/database/aerolinea_db.cc_JAQ/schema/pg_catalog.0S1ZNQ.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/53aae81e-669d-4af3-b8b6-bcc5ad0cb74f/storage_v2/_src_/database/aerolinea_db.cc_JAQ/schema/public.abK9xQ.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/data_source_mapping.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/data_source_mapping.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/Base/controller/baseController.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/Base/controller/baseController.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/Base/dto/BaseDTO.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/Base/dto/BaseDTO.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/Base/models/Avion.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/Base/models/Avion.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/Base/validators/baseValidator.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/Base/validators/baseValidator.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/db/aerolinea.sql" beforeDir="false" afterPath="$PROJECT_DIR$/src/db/aerolinea.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/Usuario/validators/UserValidator.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/Usuario/validators/UserValidator.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -96,7 +85,9 @@
       <workItem from="1763355619902" duration="11000" />
       <workItem from="1763355889337" duration="8306000" />
       <workItem from="1763408996074" duration="13442000" />
-      <workItem from="1763443876560" duration="682000" />
+      <workItem from="1763443876560" duration="7492000" />
+      <workItem from="1763538609984" duration="6490000" />
+      <workItem from="1763586293700" duration="2017000" />
     </task>
     <servers />
   </component>
