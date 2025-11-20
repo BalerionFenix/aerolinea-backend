@@ -31,7 +31,7 @@ Estos pasos te permitirán tener el servidor backend corriendo en tu entorno loc
 ### 1\. Clonar el repositorio
 
 ```bash
-git clone <https://github.com/BalerionFenix/aerolinea-backend.git>
+gh repo clone BalerionFenix/aerolinea-backend
 cd aerolinea_backend
 ```
 
