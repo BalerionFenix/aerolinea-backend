@@ -1,222 +1,138 @@
-Aerolínea Backend
 
-Backend estructurado por módulos (Base, Usuario, Mantenimiento), usando Node.js, Express y Sequelize sobre PostgreSQL.
+## ✈️ Aerolínea Backend
 
-Tecnologías utilizadas
+[![Node.js](https://img.shields.io/badge/Node.js-v18-green?logo=node.js)](https://nodejs.org/)
+[![PostgreSQL](https://img.shields.io/badge/PostgreSQL-v15-blue?logo=postgresql)](https://www.postgresql.org/)
+[![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
-Node.js (ES Modules)
 
-Express
+Backend modular para la gestión de **bases aéreas**, **usuarios**, **roles**, **aeronaves** y **mantenimientos**, implementado en **Node.js**, **Express** y **Sequelize** sobre **PostgreSQL**.
 
-PostgreSQL
+-----
 
-Sequelize ORM
+## 🛠️ Tecnologías utilizadas
 
-CORS
+El proyecto está construido con un stack moderno enfocado en la modularidad y el rendimiento:
 
-Seeders automáticos
+  * **Node.js** (ESM)
+  * **Express**
+  * **PostgreSQL**
+  * **Sequelize ORM**
+  * **Arquitectura por dominios** (Modular)
+  * Seeders automáticos
+  * Middleware modular
 
-Validadores
+-----
 
-Middleware por módulo
+## 🚀 Cómo ejecutar el proyecto (¡Primeros Pasos\!)
 
-Estructura general del proyecto
-src/
-│
-├─ app/
-│   ├─ Base/
-│   │   ├─ models/
-│   │   ├─ dto/
-│   │   ├─ repository/   (DAO)
-│   │   ├─ controllers/
-│   │   ├─ validators/
-│   │   ├─ middleware/
-│   │   └─ routes/
-│   │
-│   ├─ Usuario/
-│   │   ├─ models/
-│   │   ├─ dto/
-│   │   ├─ repository/
-│   │   ├─ controllers/
-│   │   ├─ validators/
-│   │   ├─ middleware/
-│   │   └─ routes/
-│   │
-│   ├─ Mantenimiento/
-│       ├─ models/
-│       ├─ dto/
-│       ├─ repository/
-│       ├─ controllers/
-│       ├─ validators/
-│       ├─ middleware/
-│       └─ routes/
-│
-├─ config/
-│   ├─ config.js          → puerto del servidor
-│   ├─ config_db.js       → conexión Sequelize
-│   ├─ config_seend.js    → seeders iniciales
-│
-├─ app.js                 → carga de rutas y middlewares globales
-└─ server.js              → arranque del servidor
+Estos pasos te permitirán tener el servidor backend corriendo en tu entorno local rápidamente.
 
-Configuración principal (app.js)
-import express from "express";
-import baseRouter from "./app/Base/routes/baseRouter.js";
-import avionRouter from "./app/Base/routes/avionRouter.js";
+### 1\. Clonar el repositorio
 
-import mantenimientoRouter from "./app/Mantenimiento/routes/mantenimientoRouter.js";
-import tipoMantenimientoRouter from "./app/Mantenimiento/routes/tipoMantenimientoRouter.js";
-import usuarioRouter from "./app/Usuario/routes/UsuariosRouter.js";
-import rolRouter from "./app/Usuario/routes/RolRouter.js";
-import cors from "cors";
+```bash
+git clone <https://github.com/BalerionFenix/aerolinea-backend.git>
+cd aerolinea_backend
+```
 
-const app = express();
-app.use(express.json(), cors());
-app.use('/api', [
-    baseRouter,
-    mantenimientoRouter,
-    tipoMantenimientoRouter,
-    usuarioRouter,
-    rolRouter,
-    avionRouter
-]);
+### 2\. Instalar dependencias
 
-export default app;
+```bash
+npm install
+```
 
-Arranque del servidor (server.js)
-import app from "./app.js";
-import {PORT} from "./config/config.js"
-import sequelize from "./config/config_db.js";
-import {setupAssociations} from "./app/associations.js";
-import {seed} from "./config/config_seend.js";
+### 3\. Configurar la base de datos PostgreSQL
 
+Asegúrate de que tienes un servidor **PostgreSQL** corriendo y crea la base de datos:
+
+```sql
+CREATE DATABASE aerolinea_db;
+```
+
+> **Nota:** La configuración por defecto está en `config/config_db.js` (DB: `aerolinea_db`, User: `postgres`, Pass: `12345`).
+
+### 4\. Ejecutar el servidor (Modo Desarrollo)
+
+Este comando es el más recomendado. Utiliza `nodemon` para reinicio automático, realiza la **sincronización de modelos** y ejecuta los **seeders iniciales** automáticamente al arrancar.
+
+```bash
+npm run dev
+```
+
+### 5\. Probar la API
+
+El servidor estará escuchando en el puerto configurado:
+
+```bash
+http://localhost:4000/api
+```
+
+-----
+
+## 🔗 Rutas principales
+
+El endpoint base para todas las rutas es `http://localhost:4000/api`.
+
+| Módulo | Endpoint | Descripción |
+| :--- | :--- | :--- |
+| **Base** | `/api/base` | CRUD de bases aéreas |
+| **Avión** | `/api/avion` | CRUD de aeronaves |
+| **Usuario** | `/api/usuario` | Usuarios y autenticación |
+| **Rol** | `/api/rol` | Gestión de roles |
+| **Mantenimiento** | `/api/mantenimiento` | Registros de mantenimientos |
+| **Tipo de Mantenimiento** | `/api/tipo-mantenimiento` | Tipos de mantenimiento |
+
+-----
+
+## 🏗️ Estructura del proyecto por Módulos
+
+El backend sigue una arquitectura modular donde cada dominio de negocio tiene su propia estructura interna (`models/`, `controllers/`, `routes/`, etc.).
+
+### Módulos Principales
+
+| Módulo | Entidades Principales | Propósito |
+| :--- | :--- | :--- |
+| **Base** | Bases Aéreas, Aviones | Gestión de la infraestructura aérea. |
+| **Usuario** | Usuarios, Roles | Gestión de acceso, autenticación y permisos. |
+| **Mantenimiento** | Mantenimientos, Tipos de Mantenimiento | Registro y control de las revisiones de aeronaves. |
+
+### Carpeta `config/`
+
+Contiene archivos esenciales de configuración:
+
+  * **config.js** → Configuración general (puerto, entorno).
+  * **config\_db.js** → Configuración de la conexión a PostgreSQL con Sequelize.
+  * **config\_seend.js** → Seeders automáticos para datos iniciales.
+
+-----
+
+## ⚙️ Configuración y Detalles Técnicos
+
+### Arranque del Servidor (`server.js`)
+
+Muestra la secuencia de inicio:
+
+```javascript
+// ... importaciones ...
 async function startServer() {
     setupAssociations();
-    await sequelize.sync({ alter: true });
-    await seed();
-
-    console.log('All models were synchronized successfully.');
-
-    app.listen(PORT, () => console.log(`Server started on port ${PORT}`));
+    await sequelize.sync({ alter: true }); 
+    await seed();                        
+    // ...
 }
-
 startServer();
+```
 
-Conexión con PostgreSQL (config_db.js)
-import { Sequelize } from "sequelize";
+### Asociaciones entre Modelos (`app/associations.js`)
 
-const sequelize = new Sequelize(
-    "aerolinea_db",
-    "postgres",
-    "12345",
-    {
-        host: "localhost",
-        dialect: "postgres",
-    }
-);
+Se definen las relaciones **uno a muchos** utilizando Sequelize:
 
-export default sequelize;
-
-Variables de entorno (config.js)
-export const PORT = process.env.PORT || 4000;
-
-Asociaciones definidas (app/associations.js)
-Usuario y Roles
-
-Un rol tiene muchos usuarios
-
-Un usuario pertenece a un rol
-
-Usuario y Base
-
-Una base tiene muchos usuarios
-
-Un usuario pertenece a una base
-
-Base y Aviones
-
-Una base tiene muchos aviones
-
-Un avión pertenece a una base
-
-Mantenimiento
-
-Un tipo de mantenimiento tiene muchos mantenimientos
-
-Cada mantenimiento pertenece a un tipo de mantenimiento
-
+```javascript
 Rol.hasMany(Usuario, { foreignKey: 'rol_id', as: 'usuarios' });
 Usuario.belongsTo(Rol, { foreignKey: 'rol_id', as: 'rol' });
 
 Base.hasMany(Usuario, { foreignKey: 'base_codigo', as: 'usuarios' });
 Usuario.belongsTo(Base, { foreignKey: 'base_codigo', as: 'base' });
 
-Base.hasMany(Avion, { foreignKey: 'base_codigo', as: 'aviones' });
-Avion.belongsTo(Base, { foreignKey: 'base_codigo', as: 'base' });
-
-TipoMantenimiento.hasMany(Mantenimiento, {
-    foreignKey: 'tipo_mantenimiento_id',
-    as: 'mantenimientos'
-});
-
-Mantenimiento.belongsTo(TipoMantenimiento, {
-    foreignKey: 'tipo_mantenimiento_id',
-    as: 'tipo_mantenimiento'
-});
-
-Seeders (config_seend.js)
-
-Inserta:
-
-Roles: Administrador, Usuario
-
-Base aérea inicial: El Dorado
-
-Usuario inicial: Docente Pitter
-
-await Rol.findOrCreate({
-    where: { nombre: 'Administrador' },
-    defaults: {
-        descripcion: 'Rol con acceso completo',
-        activo: true
-    }
-});
-
-await Base.findOrCreate({
-    where: { nombre: 'Base Aérea El Dorado' },
-    defaults: {
-        base_codigo: '1',
-        ciudad: 'Bogotá',
-        pais: 'Colombia',
-        direccion: 'Avenida El Dorado #103-90',
-        activo: true
-    }
-});
-
-Rutas principales (/api)
-Módulo	Ruta	Contenido
-Base	/api/base	CRUD de bases aéreas
-Avión	/api/avion	CRUD de aviones
-Usuario	/api/usuario	Usuarios, roles, login
-Roles	/api/rol	Gestión de roles
-Mantenimiento	/api/mantenimiento	Mantenimientos asociados
-Tipos de mantenimiento	/api/tipo-mantenimiento	Gestión de tipos
-Arquitectura por módulos
-
-Cada módulo tiene:
-
-models/ Modelo Sequelize
-
-dto/ Transformación de datos
-
-repository/ Acceso a BD (DAO)
-
-controllers/ Lógica del caso de uso
-
-validators/ Validaciones de entrada
-
-middleware/ Autorización / validaciones avanzadas
-
-routes/ Rutas Express
-
-Esta estructura permite escalabilidad y separación de responsabilidades.
+// ... y otras asociaciones clave ...
+```
