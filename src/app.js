@@ -7,11 +7,12 @@ import tipoMantenimientoRouter from "./app/Mantenimiento/routes/tipoMantenimient
 import usuarioRouter from "./app/Usuario/routes/UsuariosRouter.js";
 import rolRouter from "./app/Usuario/routes/RolRouter.js";
 import cors from "cors";
+import vueloRouter from "./app/Base/routes/vueloRouter.js";
 
 
 const app = express();
 app.use(express.json(), cors());
-app.use('/api', [baseRouter, mantenimientoRouter, tipoMantenimientoRouter, usuarioRouter, rolRouter, avionRouter]);
+app.use('/api', [baseRouter, mantenimientoRouter, tipoMantenimientoRouter, usuarioRouter, rolRouter, avionRouter, vueloRouter]);
 
 
 export default app;
