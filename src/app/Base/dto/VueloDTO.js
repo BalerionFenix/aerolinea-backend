@@ -18,6 +18,7 @@ export class VueloUpdateDTO {
     constructor(data) {
         this.origen = data.origen;
         this.destino = data.destino;
+        this.estado = data.estado;
         this.fecha = data.fecha;
         this.hora = data.hora;
         this.avion_codigo = data.avion_codigo;
