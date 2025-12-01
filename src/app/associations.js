@@ -6,6 +6,9 @@ import Rol from "./Usuario/models/Rol.js";
 import Usuario from "./Usuario/models/Usuario.js";
 import Base from "./Base/models/Base.js";
 import Avion from "./Base/models/Avion.js";
+import Persona from "./Personal/models/Persona.js";
+import Piloto from "./Personal/models/Piloto.js";
+import MiembroTripulacion from "./Personal/models/MiembroTripulacion.js";
 
 // Importaciones futuras de modelos que aún no existen
 // import Vuelo from '../modules/base/models/Vuelo.js';
@@ -61,27 +64,43 @@ export const setupAssociations = () => {
         // RELACIONES DEL MÓDULO PERSON (Usuarios, Pilotos)
         // =============================================
 
-        // Usuario ↔ Piloto (Un usuario puede ser piloto)
-       /* Usuario.hasOne(Piloto, {
-            foreignKey: 'usuario_id',
+        // Persona ↔ Piloto (1:1)
+        Persona.hasOne(Piloto, {
+            foreignKey: 'piloto_codigo',
+            sourceKey: 'persona_codigo',
             as: 'piloto'
         });
 
-        Piloto.belongsTo(Usuario, {
-            foreignKey: 'usuario_id',
+        Piloto.belongsTo(Persona, {
+            foreignKey: 'piloto_codigo',
+            targetKey: 'persona_codigo',
+            as: 'Persona'
+        });
+
+        // Persona ↔ MiembroTripulacion (1:1)
+        Persona.hasOne(MiembroTripulacion, {
+            foreignKey: 'miembro_codigo',
+            sourceKey: 'persona_codigo',
+            as: 'miembro'
+        });
+
+        MiembroTripulacion.belongsTo(Persona, {
+            foreignKey: 'miembro_codigo',
+            targetKey: 'persona_codigo',
+            as: 'Persona'
+        });
+
+        // Usuario ↔ Persona (opcional relación)
+        Usuario.belongsTo(Persona, {
+            foreignKey: 'persona_codigo',
+            as: 'persona'
+        });
+
+        Persona.hasOne(Usuario, {
+            foreignKey: 'persona_codigo',
+            sourceKey: 'persona_codigo',
             as: 'usuario'
         });
-
-        // Piloto ↔ Vuelo (Un piloto tiene muchos vuelos)
-        Piloto.hasMany(Vuelo, {
-            foreignKey: 'piloto_id',
-            as: 'vuelos'
-        });
-
-        Vuelo.belongsTo(Piloto, {
-            foreignKey: 'piloto_id',
-            as: 'piloto'
-        });*/
 
         // =============================================
         // =============================================
