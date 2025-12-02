@@ -3,7 +3,7 @@ import { Sequelize } from "sequelize";
  const sequelize = new Sequelize(
     "aerolinea_db",
     "postgres",
-    "12345",
+    "1234",
     {
         host: "localhost",
         port: 5433,

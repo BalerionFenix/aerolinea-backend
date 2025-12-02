@@ -15,4 +15,6 @@ async function startServer() {
     app.listen(PORT, () => console.log(`Server started on port ${PORT}`));
 }
 
+// inicializar el servidor
+
 startServer();
