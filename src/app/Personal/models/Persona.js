@@ -12,7 +12,7 @@ const Persona = sequelize.define("Persona", {
         allowNull: false
     },
     base_codigo: {
-        type: DataTypes.STRING,
+        type: DataTypes.INTEGER,
         allowNull: false,
         references: { model: Base, key: "base_codigo" }
     },

@@ -8,5 +8,12 @@
       <jdbc-url>jdbc:postgresql://localhost:5432/aerolinea_db</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
+    <data-source source="LOCAL" name="aerolinea_db@dpg-d4evj6m3jp1c738p6ovg-a.oregon-postgres.render.com" uuid="8b331db5-e595-45d4-aede-dc9e18bd8d83">
+      <driver-ref>postgresql</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+      <jdbc-url>jdbc:postgresql://dpg-d4evj6m3jp1c738p6ovg-a.oregon-postgres.render.com:5432/aerolinea_db</jdbc-url>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
   </component>
 </project>

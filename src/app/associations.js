@@ -1,4 +1,4 @@
-import Sequelize from "../config/config_db.js";
+import sequelize from "../config/config_db.js";
 //import Aeronave from '../modules/base/models/Aeronave.js';
 import Mantenimiento from "./Mantenimiento/models/Mantenimiento.js";
 import TipoMantenimiento from "./Mantenimiento/models/TipoMantenimiento.js";
