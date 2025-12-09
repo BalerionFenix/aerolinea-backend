@@ -52,8 +52,9 @@ class MantenimientoDAO {
     async delete(id) {
         const mantenimiento = await Mantenimiento.findByPk(id);
         if (!mantenimiento) return null;
-
-        await mantenimiento.destroy();
+            mantenimiento.estado = false;
+            await mantenimiento.save();
+        //await mantenimiento.destroy();
         return true;
     }
 

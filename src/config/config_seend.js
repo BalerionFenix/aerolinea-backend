@@ -37,9 +37,9 @@ export async function seed() {
     const base = await Base.findOne({ where: { nombre: 'Base Aérea El Dorado' } });
 
     await Usuario.findOrCreate({
-        where: { email: 'docente.pitter@example.com' },
+        where: { email: 'docente.peter@example.com'},
         defaults: {
-            nombre: 'Docente Pitter',
+            nombre: 'Docente Peter Fierro ',
             rol_id: adminRol.rol_id,
             base_codigo: base.base_codigo,
             activo: false

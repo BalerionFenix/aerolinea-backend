@@ -8,7 +8,7 @@ import { seed } from "./config/config_seend.js";
 async function startServer() {
     try {
         setupAssociations();
-        await sequelize.sync({ force: true });
+        await sequelize.sync({ alter: true });
         await seed();
         console.log('All models were synchronized successfully.');
         console.log("Firebase project:", process.env.FIREBASE_PROJECT_ID);

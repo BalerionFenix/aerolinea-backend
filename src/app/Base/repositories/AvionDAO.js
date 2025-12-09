@@ -36,7 +36,10 @@ class AvionDAO {
         const avion = await Avion.findByPk(avion_codigo);
         if (!avion) return null;
 
-        await avion.destroy();
+        avion.estado = false;
+        await avion.save()
+
+        //await avion.destroy();
         return true;
     }
 }

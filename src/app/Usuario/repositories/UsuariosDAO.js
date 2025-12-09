@@ -48,8 +48,9 @@ class UsuarioDAO {
     async delete(id) {
         const user = await Usuario.findByPk(id);
         if (!user) return null;
-
-        await user.destroy();
+        user.estado = false;
+        await user.save();
+       // await user.destroy();
         return true;
     }
 }

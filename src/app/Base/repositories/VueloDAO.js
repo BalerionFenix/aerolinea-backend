@@ -55,7 +55,10 @@ class VueloDAO {
         const vuelo = await Vuelo.findByPk(vuelo_num);
         if (!vuelo) return null;
 
-        await vuelo.destroy();
+        vuelo.estado = false;
+        await vuelo.save()
+
+       // await vuelo.destroy();
         return true;
     }
 }

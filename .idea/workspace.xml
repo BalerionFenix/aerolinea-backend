@@ -4,7 +4,19 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6d04e158-b4eb-4d39-8478-389d543dc231" name="Changes" comment="" />
+    <list default="true" id="6d04e158-b4eb-4d39-8478-389d543dc231" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/app.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/Base/repositories/AvionDAO.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/Base/repositories/AvionDAO.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/Base/repositories/BaseDAO.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/Base/repositories/BaseDAO.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/Base/repositories/VueloDAO.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/Base/repositories/VueloDAO.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/Mantenimiento/repositories/MantenimientoDAO.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/Mantenimiento/repositories/MantenimientoDAO.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/Mantenimiento/validators/mantenimientoValidator.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/Mantenimiento/validators/mantenimientoValidator.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/Usuario/repositories/RolDAO.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/Usuario/repositories/RolDAO.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/Usuario/repositories/UsuariosDAO.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/Usuario/repositories/UsuariosDAO.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/config/config_seend.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/config/config_seend.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.js" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -111,7 +123,8 @@
       <workItem from="1765168803530" duration="1131000" />
       <workItem from="1765214751356" duration="505000" />
       <workItem from="1765219972331" duration="4689000" />
-      <workItem from="1765225108467" duration="17102000" />
+      <workItem from="1765225108467" duration="29439000" />
+      <workItem from="1765297219899" duration="764000" />
     </task>
     <servers />
   </component>

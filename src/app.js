@@ -9,14 +9,14 @@ import personaRouter from "./app/Personal/routes/PersonaRouter.js";
 import pilotoRouter from "./app/Personal/routes/PilotoRouter.js";
 import miembroRouter from "./app/Personal/routes/MiembroTripulacionRouter.js";
 import authRouter from "./firebase_auth/auth.js";
+import VueloRouter from "./app/Base/routes/vueloRouter.js";
 import cors from "cors";
-import vueloRouter from "./app/Base/routes/vueloRouter.js";
 
 
 const app = express();
 app.use(express.json(), cors());
 
-app.use('/api', [baseRouter, mantenimientoRouter, tipoMantenimientoRouter, usuarioRouter, rolRouter, avionRouter, personaRouter, pilotoRouter, miembroRouter, authRouter]);
+app.use('/api', [baseRouter, mantenimientoRouter, tipoMantenimientoRouter, usuarioRouter, rolRouter, avionRouter, personaRouter, pilotoRouter, miembroRouter, authRouter, VueloRouter]);
 
 
 export default app;
