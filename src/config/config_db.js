@@ -16,15 +16,10 @@ import { Sequelize } from "sequelize";
 
      },
 
-     /*
-    "aerolinea_db",
+   /* "aerolinea_db",
     "postgres",
-    "12345",
-     {
-         host: "localhost",
-         dialect: "postgres",
-     }*/
-    /*{
+    "123456",
+    {
         host: "localhost",
         port: 5433,
         dialect: "postgres",

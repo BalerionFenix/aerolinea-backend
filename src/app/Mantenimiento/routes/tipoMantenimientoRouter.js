@@ -11,36 +11,51 @@ const tipoMantenimientoRouter = Router();
 
 // Crear un nuevo tipo de mantenimiento
 tipoMantenimientoRouter.post(
-    "/tipoMantenimientoRouter",
+    "/tipo-mantenimiento",
     validateRequest(CreateTipoMantenimientoSchema),
     TipoMantenimientoController.crearTipoMantenimiento
 );
 
 // Obtener todos los tipos de mantenimiento
-tipoMantenimientoRouter.get("/tipoMantenimientoRouter", TipoMantenimientoController.obtenerTiposMantenimiento);
+tipoMantenimientoRouter.get(
+    "/tipo-mantenimiento",
+    TipoMantenimientoController.obtenerTiposMantenimiento
+);
 
 // Obtener tipos de mantenimiento activos
-tipoMantenimientoRouter.get("/tipoMantenimientoRouter/activos", TipoMantenimientoController.obtenerTiposActivos);
+tipoMantenimientoRouter.get(
+    "/tipo-mantenimiento/activos",
+    TipoMantenimientoController.obtenerTiposActivos
+);
 
 // Estadísticas generales de tipos de mantenimiento
-tipoMantenimientoRouter.get("/tipoMantenimientoRouter/estadisticas", TipoMantenimientoController.obtenerEstadisticasTipos);
+tipoMantenimientoRouter.get(
+    "/tipo-mantenimiento/estadisticas",
+    TipoMantenimientoController.obtenerEstadisticasTipos
+);
 
 // Estadísticas detalladas con conteo
-tipoMantenimientoRouter.get("/tipoMantenimientoRouter/estadisticas/conteo", TipoMantenimientoController.obtenerTiposConEstadisticas);
+tipoMantenimientoRouter.get(
+    "/tipo-mantenimiento/estadisticas/conteo",
+    TipoMantenimientoController.obtenerTiposConEstadisticas
+);
 
 // Obtener tipos de mantenimiento filtrados por frecuencia
-tipoMantenimientoRouter.get("/tipoMantenimientoRouter/filtro/frecuencia", TipoMantenimientoController.obtenerTiposPorFrecuencia);
+tipoMantenimientoRouter.get(
+    "/tipo-mantenimiento/filtro/frecuencia",
+    TipoMantenimientoController.obtenerTiposPorFrecuencia
+);
 
 // Obtener un tipo de mantenimiento por ID
 tipoMantenimientoRouter.get(
-    "/tipoMantenimientoRouter/:id",
+    "/tipo-mantenimiento/:id",
     validateRequest(TipoMantenimientoIdParamSchema, "params"),
     TipoMantenimientoController.obtenerTipoMantenimiento
 );
 
 // Actualizar un tipo de mantenimiento por ID
 tipoMantenimientoRouter.put(
-    "/tipoMantenimientoRouter/:id",
+    "/tipo-mantenimiento/:id",
     validateRequest(TipoMantenimientoIdParamSchema, "params"),
     validateRequest(UpdateTipoMantenimientoSchema),
     TipoMantenimientoController.actualizarTipoMantenimiento
@@ -48,7 +63,7 @@ tipoMantenimientoRouter.put(
 
 // Eliminar un tipo de mantenimiento por ID
 tipoMantenimientoRouter.delete(
-    "/tipoMantenimientoRouter/:id",
+    "/tipo-mantenimiento/:id",
     validateRequest(TipoMantenimientoIdParamSchema, "params"),
     TipoMantenimientoController.eliminarTipoMantenimiento
 );

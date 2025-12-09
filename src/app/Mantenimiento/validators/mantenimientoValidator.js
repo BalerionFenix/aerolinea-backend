@@ -7,7 +7,7 @@ export const CreateMantenimientoSchema = Joi.object({
         "number.min": "El ID del tipo de mantenimiento debe ser mayor a 0",
         "any.required": "El tipo de mantenimiento es requerido"
     }),
-    aeronave_id: Joi.number().integer().min(1).required().messages({
+    avion_codigo: Joi.number().integer().min(1).required().messages({
         "number.base": "El ID de la aeronave debe ser un número",
         "number.integer": "El ID de la aeronave debe ser un número entero",
         "number.min": "El ID de la aeronave debe ser mayor a 0",

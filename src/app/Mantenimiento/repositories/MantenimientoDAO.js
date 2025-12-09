@@ -1,13 +1,14 @@
 import { Sequelize } from 'sequelize';
 import Mantenimiento from "../models/Mantenimiento.js";
 import TipoMantenimiento from "../models/TipoMantenimiento.js";
+import Avion from "../../Base/models/Avion.js";
 
 class MantenimientoDAO {
 
     constructor() {
-        this.includeAeronaveTipo = [
+        this.includeAvionTipo = [
             { model: TipoMantenimiento, as: 'tipo_mantenimiento', attributes: ['id', 'nombre', 'descripcion'] },
-      //      { model: Aeronave, as: 'aeronave', attributes: ['id', 'matricula', 'modelo'] }
+            { model: Avion, as: 'avion', attributes: ['avion_codigo', 'modelo', 'tipo', 'fabricante'] }
         ];
 
         this.includeTipo = [
@@ -23,22 +24,17 @@ class MantenimientoDAO {
         const offset = (pagina - 1) * limite;
 
         const { count, rows } = await Mantenimiento.findAndCountAll({
-            include: this.includeAeronaveTipo,
+            include: this.includeAvionTipo,
             limit: limite,
             offset: offset,
             order: [['fecha_programada', 'DESC']]
         });
 
-        return {
-            total: count,
-            pagina: parseInt(pagina),
-            totalPaginas: Math.ceil(count / limite),
-            mantenimientos: rows
-        };
+        return rows; // solo devolvemos los mantenimientos, sin paginación
     }
 
     async getById(id) {
-        return await Mantenimiento.findByPk(id, { include: this.includeAeronaveTipo });
+        return await Mantenimiento.findByPk(id, { include: this.includeAvionTipo });
     }
 
     async update(id, data) {
@@ -53,7 +49,6 @@ class MantenimientoDAO {
         return mantenimiento;
     }
 
-
     async delete(id) {
         const mantenimiento = await Mantenimiento.findByPk(id);
         if (!mantenimiento) return null;
@@ -62,9 +57,9 @@ class MantenimientoDAO {
         return true;
     }
 
-    async getByAeronave(aeronaveId) {
+    async getByAeronave(avionCodigo) {
         return await Mantenimiento.findAll({
-            where: { aeronave_id: aeronaveId },
+            where: { avion_codigo: avionCodigo },
             include: this.includeTipo,
             order: [['fecha_programada', 'DESC']]
         });
@@ -73,7 +68,7 @@ class MantenimientoDAO {
     async getByEstado(estado) {
         return await Mantenimiento.findAll({
             where: { estado },
-            include: this.includeAeronaveTipo,
+            include: this.includeAvionTipo,
             order: [['fecha_programada', 'DESC']]
         });
     }
@@ -81,7 +76,7 @@ class MantenimientoDAO {
     async getProximos(limite = 5) {
         return await Mantenimiento.findAll({
             where: { estado: 'programado' },
-            include: this.includeAeronaveTipo,
+            include: this.includeAvionTipo,
             order: [['fecha_programada', 'ASC']],
             limit: parseInt(limite)
         });
