@@ -1,6 +1,7 @@
 import { Sequelize } from "sequelize";
 
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
  const sequelize = new Sequelize(
     "aerolinea_db",
     "postgres",
@@ -12,6 +13,8 @@ import { Sequelize } from "sequelize";
     }
 );
 =======
+=======
+>>>>>>> Stashed changes
  /*const sequelize = new Sequelize(
      "aerolinea_db",
      "postgres_db",
@@ -36,6 +39,9 @@ import { Sequelize } from "sequelize";
             dialect: "postgres",
         }
     );
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
 
 console.log(`Sequelize DB config: host=${sequelize.options.host} port=${sequelize.options.port} database=${sequelize.config.database}`);

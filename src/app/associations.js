@@ -1,6 +1,9 @@
 import Sequelize from "../config/config_db.js";
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 //import Aeronave from '../modules/base/models/Aeronave.js';
+=======
+>>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
 import Mantenimiento from "./Mantenimiento/models/Mantenimiento.js";
