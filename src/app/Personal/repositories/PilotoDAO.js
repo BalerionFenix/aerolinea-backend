@@ -71,8 +71,9 @@ class PilotoDAO {
     async delete(codigo) {
         const piloto = await Piloto.findByPk(codigo);
         if (!piloto) return null;
-
-        await piloto.destroy();
+            piloto.estado = false;
+            await piloto.save();
+        //await piloto.destroy();
         return true;
     }
 }

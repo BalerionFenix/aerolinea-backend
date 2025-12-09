@@ -61,8 +61,9 @@ class MiembroTripulacionDAO {
     async delete(codigo, options = {}) {
         const miembro = await MiembroTripulacion.findByPk(codigo, options);
         if (!miembro) return null;
-
-        await miembro.destroy(options);
+       miembro.estado = false;
+       await  miembro.save();
+       // await miembro.destroy(options);
         return true;
     }
 }
