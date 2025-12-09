@@ -11,18 +11,15 @@ const Mantenimiento = sequelize.define('Mantenimiento', {
         type: DataTypes.INTEGER,
         allowNull: false,
         references: {
-            model: 'tipo_mantenimientos', // Sequelize pluraliza automáticamente
+            model: 'tipo_mantenimientos',
             key: 'id'
         }
     },
-  /*  aeronave_id: {
+    avion_codigo: {
         type: DataTypes.INTEGER,
-        allowNull: false,
-        references: {
-            model: 'aeronaves', // Asumiendo que existe este modelo
-            key: 'id'
-        }
-    },*/
+        allowNull: true,
+        field: 'avion_codigo'
+    },
     fecha_programada: {
         type: DataTypes.DATE,
         allowNull: false

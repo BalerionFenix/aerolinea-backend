@@ -32,7 +32,9 @@ class RolDAO {
         const rol = await Rol.findByPk(id);
         if (!rol) return null;
 
-        await rol.destroy();
+        rol.estado = false;
+        await rol.save();
+       // await rol.destroy();
         return true;
     }
 }

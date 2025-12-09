@@ -14,19 +14,14 @@ const Persona = sequelize.define(
       allowNull: false,
     },
     base_codigo: {
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
+
         type: DataTypes.STRING,
+
         allowNull: false,
         references: { model: Base, key: "base_codigo" }
-=======
       type: DataTypes.INTEGER,
       allowNull: false,
->>>>>>> Stashed changes
-=======
-      type: DataTypes.INTEGER,
-      allowNull: false,
->>>>>>> Stashed changes
+
     },
     activo: {
       type: DataTypes.BOOLEAN,

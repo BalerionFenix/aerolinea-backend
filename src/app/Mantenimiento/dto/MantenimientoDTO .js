@@ -2,7 +2,7 @@
 export class MantenimientoInputDTO {
     constructor(data) {
         this.tipo_mantenimiento_id = data.tipo_mantenimiento_id;
-        this.aeronave_id = data.aeronave_id;
+        this.avion_codigo = data.avion_codigo; // <- cambio aquí
         this.fecha_programada = data.fecha_programada;
         this.fecha_inicio = data.fecha_inicio;
         this.fecha_fin = data.fecha_fin;
@@ -10,7 +10,7 @@ export class MantenimientoInputDTO {
         this.costo_real = data.costo_real;
         this.descripcion = data.descripcion;
         this.personal_asignado = data.personal_asignado;
-        this.estado = data.estado || "Programado";
+        this.estado = data.estado || "programado";
     }
 }
 
@@ -18,7 +18,7 @@ export class MantenimientoInputDTO {
 export class MantenimientoUpdateDTO {
     constructor(data) {
         this.tipo_mantenimiento_id = data.tipo_mantenimiento_id;
-        this.aeronave_id = data.aeronave_id;
+        this.avion_codigo = data.avion_codigo; // <- cambio aquí
         this.fecha_programada = data.fecha_programada;
         this.fecha_inicio = data.fecha_inicio;
         this.fecha_fin = data.fecha_fin;
@@ -30,12 +30,13 @@ export class MantenimientoUpdateDTO {
     }
 }
 
+
 // DTO de salida de Mantenimiento
 export class MantenimientoOutputDTO {
     constructor(mantenimiento) {
         this.id = mantenimiento.id;
         this.tipo_mantenimiento_id = mantenimiento.tipo_mantenimiento_id;
-        this.aeronave_id = mantenimiento.aeronave_id;
+        this.avion_codigo = mantenimiento.avion_codigo; // <- cambio aquí
 
         this.fecha_programada = mantenimiento.fecha_programada;
         this.fecha_inicio = mantenimiento.fecha_inicio;
@@ -53,9 +54,13 @@ export class MantenimientoOutputDTO {
 
         // Incluir relaciones si existen
         if (mantenimiento.tipo_mantenimiento) {
-            this.tipo_mantenimiento = new TipoMantenimientoOutputDTO(
-                mantenimiento.tipo_mantenimiento
-            );
+            this.tipo_mantenimiento = {
+                id: mantenimiento.tipo_mantenimiento.id,
+                nombre: mantenimiento.tipo_mantenimiento.nombre,
+                descripcion: mantenimiento.tipo_mantenimiento.descripcion,
+                duracion_estimada: mantenimiento.tipo_mantenimiento.duracion_estimada,
+                frecuencia: mantenimiento.tipo_mantenimiento.frecuencia
+            };
         }
 
         if (mantenimiento.aeronave) {

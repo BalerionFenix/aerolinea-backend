@@ -33,7 +33,10 @@ class BaseDAO {
     async delete(id) {
         const base = await Base.findByPk(id);
         if (!base) return null;
-        await base.destroy();
+
+        base.estado = false;
+        await base.save();
+       /* await base.destroy();*/
         return true;
     }
 }

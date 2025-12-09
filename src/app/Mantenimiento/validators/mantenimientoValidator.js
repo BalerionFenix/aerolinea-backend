@@ -7,7 +7,7 @@ export const CreateMantenimientoSchema = Joi.object({
         "number.min": "El ID del tipo de mantenimiento debe ser mayor a 0",
         "any.required": "El tipo de mantenimiento es requerido"
     }),
-    aeronave_id: Joi.number().integer().min(1).required().messages({
+    avion_codigo: Joi.number().integer().min(1).required().messages({
         "number.base": "El ID de la aeronave debe ser un número",
         "number.integer": "El ID de la aeronave debe ser un número entero",
         "number.min": "El ID de la aeronave debe ser mayor a 0",
@@ -59,7 +59,7 @@ export const UpdateMantenimientoSchema = Joi.object({
         "number.integer": "El ID del tipo de mantenimiento debe ser un número entero",
         "number.min": "El ID del tipo de mantenimiento debe ser mayor a 0"
     }),
-    aeronave_id: Joi.number().integer().min(1).optional().messages({
+    avion_codigo: Joi.number().integer().min(1).optional().messages({
         "number.base": "El ID de la aeronave debe ser un número",
         "number.integer": "El ID de la aeronave debe ser un número entero",
         "number.min": "El ID de la aeronave debe ser mayor a 0"
@@ -126,7 +126,7 @@ export const MantenimientoQuerySchema = Joi.object({
         "string.base": "El estado debe ser un texto",
         "any.only": "El estado solo puede ser: programado, en_proceso, completado o cancelado"
     }),
-    aeronave_id: Joi.number().integer().min(1).optional().messages({
+    avion_codigo: Joi.number().integer().min(1).optional().messages({
         "number.base": "El ID de la aeronave debe ser un número",
         "number.integer": "El ID de la aeronave debe ser un número entero",
         "number.min": "El ID de la aeronave debe ser mayor a 0"
@@ -134,7 +134,7 @@ export const MantenimientoQuerySchema = Joi.object({
 });
 
 export const AeronaveIdParamSchema = Joi.object({
-    aeronaveId: Joi.number().integer().min(1).required().messages({
+    avion_codigo: Joi.number().integer().min(1).required().messages({
         "number.base": "El ID de la aeronave debe ser un número",
         "number.integer": "El ID de la aeronave debe ser un número entero",
         "number.min": "El ID de la aeronave debe ser mayor a 0",

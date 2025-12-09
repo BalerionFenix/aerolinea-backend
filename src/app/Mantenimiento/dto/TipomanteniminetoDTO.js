@@ -5,7 +5,7 @@ export class TipoMantenimientoInputDTO {
         this.descripcion = data.descripcion;
         this.duracion_estimada = data.duracion_estimada;
         this.frecuencia = data.frecuencia;
-        this.estado = data.estado ?? true;  // Por defecto TRUE
+        this.estado = data.estado ?? true;
     }
 }
 
@@ -25,7 +25,7 @@ export class TipoMantenimientoOutputDTO {
     constructor(tipo) {
         this.id = tipo.id;
         this.nombre = tipo.nombre;
-       	this.descripcion = tipo.descripcion;
+        this.descripcion = tipo.descripcion;
         this.duracion_estimada = tipo.duracion_estimada;
         this.frecuencia = tipo.frecuencia;
         this.estado = tipo.estado;

@@ -5,9 +5,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6d04e158-b4eb-4d39-8478-389d543dc231" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/config/config_seend.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/db/aerolinea.sql" beforeDir="false" afterPath="$PROJECT_DIR$/src/db/aerolinea.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/app.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/Base/repositories/AvionDAO.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/Base/repositories/AvionDAO.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/Base/repositories/BaseDAO.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/Base/repositories/BaseDAO.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/Base/repositories/VueloDAO.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/Base/repositories/VueloDAO.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/Mantenimiento/repositories/MantenimientoDAO.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/Mantenimiento/repositories/MantenimientoDAO.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/Mantenimiento/validators/mantenimientoValidator.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/Mantenimiento/validators/mantenimientoValidator.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/Usuario/repositories/RolDAO.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/Usuario/repositories/RolDAO.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/Usuario/repositories/UsuariosDAO.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/Usuario/repositories/UsuariosDAO.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/config/config_seend.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/config/config_seend.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -25,6 +32,18 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;Gompanchir0&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/BalerionFenix/aerolinea-backend.git&quot;,
+    &quot;accountId&quot;: &quot;cdacce1d-39b7-41ef-8ce2-4ccb8021c93d&quot;
+  }
+}</component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 5
 }</component>
@@ -36,38 +55,43 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "main",
-    "ignore.virus.scanning.warn.message": "true",
-    "last_opened_file_path": "C:/Users/davie/OneDrive/Documentos/Aero_peter/aerolinea-backend",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "swagger",
-    "ts.external.directory.path": "C:\\Program Files\\JetBrains\\WebStorm 2025.2.1\\plugins\\javascript-plugin\\jsLanguageServicesImpl\\external",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/home/santiago/Escritorio/Developer/aerolinea-backend/src/index.js&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;swagger&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;/snap/webstorm/549/plugins/javascript-plugin/jsLanguageServicesImpl/external&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
-  "keyToStringList": {
-    "ChangesTree.GroupingKeys": [
-      "directory",
-      "repository"
+  &quot;keyToStringList&quot;: {
+    &quot;ChangesTree.GroupingKeys&quot;: [
+      &quot;directory&quot;,
+      &quot;repository&quot;
     ],
-    "DatabaseDriversLRU": [
-      "postgresql"
+    &quot;DatabaseDriversLRU&quot;: [
+      &quot;postgresql&quot;
     ]
   }
-}]]></component>
+}</component>
+  <component name="RunManager">
+    <configuration name="index.js" type="NodeJSConfigurationType" nameIsGenerated="true" path-to-js-file="src/index.js" working-dir="$PROJECT_DIR$">
+      <method v="2" />
+    </configuration>
+  </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-js-predefined-d6986cc7102b-b598e85cdad2-JavaScript-WS-252.25557.126" />
+        <option value="bundled-js-predefined-d6986cc7102b-a71380e98a7c-JavaScript-WS-252.28238.10" />
       </set>
     </attachedChunks>
   </component>
@@ -92,6 +116,15 @@
       <workItem from="1763443876560" duration="7492000" />
       <workItem from="1763538609984" duration="6490000" />
       <workItem from="1763586293700" duration="8052000" />
+      <workItem from="1764640923640" duration="2894000" />
+      <workItem from="1764897622367" duration="2651000" />
+      <workItem from="1765131384418" duration="4587000" />
+      <workItem from="1765136564217" duration="18015000" />
+      <workItem from="1765168803530" duration="1131000" />
+      <workItem from="1765214751356" duration="505000" />
+      <workItem from="1765219972331" duration="4689000" />
+      <workItem from="1765225108467" duration="29439000" />
+      <workItem from="1765297219899" duration="764000" />
     </task>
     <servers />
   </component>
@@ -108,5 +141,16 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/src/app/Base/dto/VueloDTO.js</url>
+          <line>5</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

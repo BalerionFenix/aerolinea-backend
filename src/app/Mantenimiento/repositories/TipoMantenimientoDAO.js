@@ -1,151 +1,113 @@
 import Mantenimiento from "../models/Mantenimiento.js";
 import TipoMantenimiento from "../models/TipoMantenimiento.js";
-import { Sequelize } from 'sequelize';
+import { Sequelize, Op } from "sequelize";
 
 class TipoMantenimientoDAO {
 
-    static async crear(tipoData) {
-        try {
-            return await TipoMantenimiento.create(tipoData);
-        } catch (error) {
-            throw error;
-        }
+    async crear(tipoData) {
+        return await TipoMantenimiento.create(tipoData);
     }
 
-    static async obtenerTodos() {
-        try {
-            return await TipoMantenimiento.findAll({
-                where: { estado: true },
-                order: [['nombre', 'ASC']]
-            });
-        } catch (error) {
-            throw error;
-        }
+    async obtenerTodos() {
+        return await TipoMantenimiento.findAll({
+            where: { estado: true },
+            order: [['nombre', 'ASC']]
+        });
     }
 
-    static async obtenerPorId(id) {
-        try {
-            return await TipoMantenimiento.findByPk(id, {
-                include: [{
-                    model: Mantenimiento,
-                    as: 'mantenimientos'
-                }]
-            });
-        } catch (error) {
-            throw error;
-        }
+    async obtenerPorId(id) {
+        return await TipoMantenimiento.findByPk(id);
     }
 
-    static async actualizar(id, tipoData) {
-        try {
-            const tipo = await TipoMantenimiento.findByPk(id);
-            if (!tipo) {
-                return null;
+
+
+    async actualizar(id, tipoData) {
+        const tipo = await TipoMantenimiento.findByPk(id);
+        if (!tipo) return null;
+
+        Object.keys(tipoData).forEach(key => {
+            if (tipoData[key] !== undefined) {
+                tipo[key] = tipoData[key];
             }
-            await tipo.update(tipoData);
-            return tipo;
-        } catch (error) {
-            throw error;
-        }
+        });
+
+        await tipo.save();
+        return tipo;
     }
 
-    static async eliminar(id) {
-        try {
-            const tipo = await TipoMantenimiento.findByPk(id);
-            if (!tipo) {
-                return false;
-            }
-            await tipo.update({ estado: false });
-            return true;
-        } catch (error) {
-            throw error;
-        }
+    async eliminar(id) {
+        const tipo = await TipoMantenimiento.findByPk(id);
+        if (!tipo) return null;
+
+        // borrado lógico
+        tipo.estado = false;
+        await tipo.save();
+        return true;
     }
 
-    static async obtenerActivos() {
-        try {
-            return await TipoMantenimiento.findAll({
-                where: { estado: true },
-                order: [['nombre', 'ASC']]
-            });
-        } catch (error) {
-            throw error;
-        }
+    async obtenerActivos() {
+        return await TipoMantenimiento.findAll({
+            where: { estado: true },
+            order: [['nombre', 'ASC']]
+        });
     }
 
-    static async obtenerConEstadisticas() {
-        try {
-            const tipos = await TipoMantenimiento.findAll({
-                where: { estado: true },
-                include: [{
-                    model: Mantenimiento,
-                    as: 'mantenimientos',
-                    attributes: []
-                }],
-                attributes: {
-                    include: [
-                        [
-                            Sequelize.fn('COUNT', Sequelize.col('mantenimientos.id')),
-                            'total_mantenimientos'
-                        ]
+    async obtenerConEstadisticas() {
+        return await TipoMantenimiento.findAll({
+            where: { estado: true },
+            include: [{
+                model: Mantenimiento,
+                as: 'mantenimientos',
+                attributes: []
+            }],
+            attributes: {
+                include: [
+                    [
+                        Sequelize.fn('COUNT', Sequelize.col('mantenimientos.id')),
+                        'total_mantenimientos'
                     ]
-                },
-                group: ['TipoMantenimiento.id'],
-                order: [['nombre', 'ASC']]
-            });
-
-            return tipos;
-        } catch (error) {
-            throw error;
-        }
+                ]
+            },
+            group: ['TipoMantenimiento.id'],
+            order: [['nombre', 'ASC']]
+        });
     }
 
-    static async obtenerPorFrecuencia(minFrecuencia = null, maxFrecuencia = null) {
-        try {
-            const whereConditions = { estado: true };
-            
-            if (minFrecuencia !== null) {
-                whereConditions.frecuencia = {
-                    ...whereConditions.frecuencia,
-                    [Sequelize.Op.gte]: minFrecuencia
-                };
-            }
-            
-            if (maxFrecuencia !== null) {
-                whereConditions.frecuencia = {
-                    ...whereConditions.frecuencia,
-                    [Sequelize.Op.lte]: maxFrecuencia
-                };
-            }
+    async obtenerPorFrecuencia(minFrecuencia = null, maxFrecuencia = null) {
+        const whereConditions = { estado: true };
 
-            return await TipoMantenimiento.findAll({
-                where: whereConditions,
-                order: [['frecuencia', 'ASC']]
-            });
-        } catch (error) {
-            throw error;
-        }
-    }
-
-    static async existeNombre(nombre, excludeId = null) {
-        try {
-            const whereConditions = { 
-                nombre: nombre,
-                estado: true 
+        if (minFrecuencia !== null) {
+            whereConditions.frecuencia = {
+                ...whereConditions.frecuencia,
+                [Op.gte]: minFrecuencia
             };
-            
-            if (excludeId) {
-                whereConditions.id = { [Sequelize.Op.ne]: excludeId };
-            }
-
-            const tipo = await TipoMantenimiento.findOne({
-                where: whereConditions
-            });
-
-            return tipo !== null;
-        } catch (error) {
-            throw error;
         }
+
+        if (maxFrecuencia !== null) {
+            whereConditions.frecuencia = {
+                ...whereConditions.frecuencia,
+                [Op.lte]: maxFrecuencia
+            };
+        }
+
+        return await TipoMantenimiento.findAll({
+            where: whereConditions,
+            order: [['frecuencia', 'ASC']]
+        });
+    }
+
+    async existeNombre(nombre, excludeId = null) {
+        const whereConditions = {
+            nombre,
+            estado: true
+        };
+
+        if (excludeId) {
+            whereConditions.id = { [Op.ne]: excludeId };
+        }
+
+        const tipo = await TipoMantenimiento.findOne({ where: whereConditions });
+        return tipo !== null;
     }
 }
 

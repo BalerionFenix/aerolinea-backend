@@ -2,6 +2,7 @@
 import Rol from '../app/Usuario/models/Rol.js';
 import Usuario from '../app/Usuario/models/Usuario.js';
 import Base from '../app/Base/models/Base.js';
+import Avion from "../app/Base/models/Avion.js";
 export async function seed() {
     // Roles
     await Rol.findOrCreate({
@@ -24,7 +25,6 @@ export async function seed() {
     await Base.findOrCreate({
         where: { nombre: 'Base Aérea El Dorado' },
         defaults: {
-            base_codigo: '1',
             ciudad: 'Bogotá',
             pais: 'Colombia',
             direccion: 'Avenida El Dorado #103-90',
@@ -37,16 +37,31 @@ export async function seed() {
     const base = await Base.findOne({ where: { nombre: 'Base Aérea El Dorado' } });
 
     await Usuario.findOrCreate({
-        where: { email: 'docente.peter@example.com' },
+        where: { email: 'docente.peter@example.com'},
         defaults: {
-            nombre: 'Docente Pitter',
+            nombre: 'Docente Peter Fierro ',
             rol_id: adminRol.rol_id,
-        base_codigo: base.base_codigo,
-        activo: false
-}
-});
+            base_codigo: base.base_codigo,
+            activo: false
+        }
+    });
+
+    await Avion.findOrCreate({
+        where: { modelo: 'F-16' }, // identifica por modelo
+        defaults: {
+            tipo: 'Caza',
+            modelo: 'F-16',
+            fabricante: 'Lockheed Martin',
+            capacidad: 1,
+            anio_fabricacion: 2010,
+            base_codigo: base.base_codigo,
+            horas_vuelo_totales: 500,
+            estado: 'OPERATIVO',
+            activo: true
+        }
+    });
+
 
     console.log('Datos iniciales creados o verificados.');
 }
 
-seed().catch(console.error);
