@@ -38,20 +38,20 @@ class PilotoDAO {
     }
 
     async create(pilotoData, options = {}) {
-        // Si no se proporciona un código, generamos uno numérico
+        // Generar código único para PILOTO (independiente de persona)
         if (!pilotoData.piloto_codigo) {
-            const lastPilot = await Piloto.findOne({
+            const lastPiloto = await Piloto.findOne({
                 order: [['piloto_codigo', 'DESC']],
                 ...options
             });
             
             let nextId = 1;
-            if (lastPilot) {
-                const lastId = parseInt(lastPilot.piloto_codigo, 10) || 0;
+            if (lastPiloto) {
+                const lastId = parseInt(lastPiloto.piloto_codigo, 10) || 0;
                 nextId = lastId + 1;
             }
             
-            pilotoData.piloto_codigo = nextId.toString();
+            pilotoData.piloto_codigo = nextId;
         }
 
         const piloto = await Piloto.create(pilotoData, options);

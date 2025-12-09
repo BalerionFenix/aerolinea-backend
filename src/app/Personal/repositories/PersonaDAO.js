@@ -15,7 +15,7 @@ class PersonaDAO {
                 nextId = lastId + 1;
             }
             
-            personaData.persona_codigo = nextId.toString();
+            personaData.persona_codigo = nextId;
         }
 
         return await Persona.create(personaData, options);

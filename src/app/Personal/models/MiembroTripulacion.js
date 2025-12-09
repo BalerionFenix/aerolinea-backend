@@ -1,24 +1,31 @@
-import { DataTypes } from "sequelize";
 import sequelize from "../../../config/config_db.js";
-import Persona from "./Persona.js";
+import { DataTypes } from "sequelize";
 
-const MiembroTripulacion = sequelize.define("MiembroTripulacion", {
+const MiembroTripulacion = sequelize.define(
+  "MiembroTripulacion",
+  {
     miembro_codigo: {
-        type: DataTypes.STRING,
-        primaryKey: true,
-        references: { model: Persona, key: "persona_codigo" }
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+      references: {
+        model: "persona",
+        key: "persona_codigo",
+      },
+      onDelete: "CASCADE",
     },
     cargo: {
-        type: DataTypes.STRING,
-        allowNull: true
+      type: DataTypes.STRING,
+      allowNull: true,
     },
     activo: {
-        type: DataTypes.BOOLEAN,
-        defaultValue: true
-    }
-}, {
+      type: DataTypes.BOOLEAN,
+      defaultValue: true,
+    },
+  },
+  {
     tableName: "miembro_tripulacion",
-    timestamps: false
-});
+    timestamps: false,
+  }
+);
 
 export default MiembroTripulacion;

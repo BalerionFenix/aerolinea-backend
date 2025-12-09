@@ -6,8 +6,8 @@ export const CreatePilotoSchema = Joi.object({
         'string.empty': 'El nombre es obligatorio',
         'any.required': 'El nombre es obligatorio'
     }),
-    base_codigo: Joi.string().required().messages({
-        'string.empty': 'El código de base es obligatorio',
+    base_codigo: Joi.number().integer().required().messages({
+        'number.base': 'El código de base debe ser un número',
         'any.required': 'El código de base es obligatorio'
     }),
     
@@ -24,7 +24,7 @@ export const CreatePilotoSchema = Joi.object({
     fecha_vencimiento_licencia: Joi.date().greater('now').required().messages({
         'date.base': 'La fecha de vencimiento debe ser una fecha válida',
         'date.greater': 'La fecha de vencimiento debe ser posterior a la fecha actual',
-        'string.base': 'La fecha de vencimiento debe ser una cadena de fecha válida'
+        'any.required': 'La fecha de vencimiento es obligatoria'
     }),
     certificaciones: Joi.array().items(Joi.string()).default([]).messages({
         'array.base': 'Las certificaciones deben ser un arreglo',
@@ -40,14 +40,14 @@ export const UpdatePilotoSchema = Joi.object({
     nombre: Joi.string().optional().messages({
         'string.empty': 'El nombre no puede estar vacío'
     }),
-    base_codigo: Joi.string().optional().messages({
-        'string.empty': 'El código de base no puede estar vacío'
+    base_codigo: Joi.number().integer().optional().messages({
+        'number.base': 'El código de base debe ser un número'
     }),
     activo: Joi.boolean().optional().messages({
         'boolean.base': 'El estado activo debe ser verdadero o falso'
     }),
     
-    // Datos específicos de piloto
+    // Datos específicos de piloto - TODOS OPCIONALES
     horas_vuelo: Joi.number().integer().min(0).optional().messages({
         'number.base': 'Las horas de vuelo deben ser un número',
         'number.integer': 'Las horas de vuelo deben ser un número entero',
@@ -56,10 +56,7 @@ export const UpdatePilotoSchema = Joi.object({
     licencia: Joi.string().optional().messages({
         'string.empty': 'El número de licencia no puede estar vacío'
     }),
-    fecha_vencimiento_licencia: Joi.alternatives().try(
-        Joi.string().allow('', null),
-        Joi.date().greater('now')
-    ).optional().messages({
+    fecha_vencimiento_licencia: Joi.date().greater('now').optional().messages({
         'date.base': 'La fecha de vencimiento debe ser una fecha válida',
         'date.greater': 'La fecha de vencimiento debe ser posterior a la fecha actual'
     }),

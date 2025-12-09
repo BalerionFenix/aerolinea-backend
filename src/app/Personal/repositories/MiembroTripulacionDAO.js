@@ -2,7 +2,7 @@ import MiembroTripulacion from "../models/MiembroTripulacion.js";
 import Persona from "../models/Persona.js";
 
 class MiembroTripulacionDAO {
-    #include = [{ model: Persona, as: "persona" }];
+    #include = [{ model: Persona, as: "Persona" }];
 
     async #findByIdWithInclude(codigo, options = {}) {
         return await MiembroTripulacion.findByPk(codigo, { 
@@ -30,6 +30,22 @@ class MiembroTripulacionDAO {
     }
 
     async create(miembroData, options = {}) {
+        // Generar código único para MIEMBRO (independiente de persona)
+        if (!miembroData.miembro_codigo) {
+            const lastMiembro = await MiembroTripulacion.findOne({
+                order: [['miembro_codigo', 'DESC']],
+                ...options
+            });
+            
+            let nextId = 1;
+            if (lastMiembro) {
+                const lastId = parseInt(lastMiembro.miembro_codigo, 10) || 0;
+                nextId = lastId + 1;
+            }
+            
+            miembroData.miembro_codigo = nextId; // Asignar como entero en lugar de cadena
+        }
+
         const miembro = await MiembroTripulacion.create(miembroData, options);
         return await this.#reloadWithInclude(miembro, options);
     }
