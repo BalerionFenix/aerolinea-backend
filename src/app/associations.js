@@ -8,6 +8,8 @@ import Avion from "./Base/models/Avion.js";
 import Persona from "./Personal/models/Persona.js";
 import Piloto from "./Personal/models/Piloto.js";
 import MiembroTripulacion from "./Personal/models/MiembroTripulacion.js";
+import Miembro from "./Personal/models/MiembroTripulacion.js";
+import Vuelo from "./Base/models/Vuelo.js";
 
 
 export const setupAssociations = () => {
@@ -27,21 +29,7 @@ export const setupAssociations = () => {
         Base.hasMany(Usuario, { foreignKey: 'base_codigo', as: 'usuarios' });
         Usuario.belongsTo(Base, { foreignKey: 'base_codigo', as: 'base' });
 
-        // Usuario ↔ Persona (1:1 opcional)
-        Usuario.belongsTo(Persona, { foreignKey: 'persona_codigo', as: 'persona' });
-        Persona.hasOne(Usuario, { foreignKey: 'persona_codigo', sourceKey: 'persona_codigo', as: 'usuario' });
 
-        // Usuario ↔ Persona (opcional relación)
-        Usuario.belongsTo(Persona, {
-            foreignKey: 'persona_codigo',
-            as: 'persona'
-        });
-
-        Persona.hasOne(Usuario, {
-            foreignKey: 'persona_codigo',
-            sourceKey: 'persona_codigo',
-            as: 'usuario'
-        });
 
         // =============================================
         // RELACIONES DEL MÓDULO BASE (Base y Aviones)
@@ -56,17 +44,6 @@ export const setupAssociations = () => {
         Avion.hasMany(Mantenimiento, {foreignKey: 'avion_codigo', sourceKey: 'avion_codigo', as: 'mantenimientos'});
         Mantenimiento.belongsTo(Avion, {foreignKey: 'avion_codigo', targetKey: 'avion_codigo', as: 'avion'});
 
-
-        // Persona ↔ Base (Una persona pertenece a una base)
-        Base.hasMany(Persona, {
-            foreignKey: 'base_codigo',
-            as: 'personas'
-        });
-
-        Persona.belongsTo(Base, {
-            foreignKey: 'base_codigo',
-            as: 'base'
-        });
 
         // =============================================
         // RELACIONES DEL MÓDULO PERSONAL (Persona, Piloto, Miembro)
@@ -98,21 +75,12 @@ export const setupAssociations = () => {
             as: 'Persona'
         });
 
-        // =============================================
-        // RELACIONES DEL MÓDULO MANTENIMIENTO
-        // =============================================
-
-        // TipoMantenimiento ↔ Mantenimiento
-        TipoMantenimiento.hasMany(Mantenimiento, {
-            foreignKey: 'tipo_mantenimiento_id',
-            as: 'mantenimientos'
-        });
 
 
 
         // Usuario ↔ Miembro (1:1)
-        Usuario.hasOne(Miembro, { foreignKey: 'usuario_id', as: 'miembro' });
-        Miembro.belongsTo(Usuario, { foreignKey: 'usuario_id', as: 'usuario' });
+        Usuario.belongsTo(Persona, {foreignKey: 'persona_codigo', as: 'persona'});
+        Persona.hasOne(Usuario, {foreignKey: 'persona_codigo', sourceKey: 'persona_codigo', as: 'usuario'});
 
         // Miembro ↔ Vuelo (1:N)
         Miembro.hasMany(Vuelo, { foreignKey: 'miembro_id', as: 'vuelos' });

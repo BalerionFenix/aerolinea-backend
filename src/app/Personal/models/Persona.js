@@ -1,5 +1,6 @@
 import sequelize from "../../../config/config_db.js";
 import { DataTypes } from "sequelize";
+import Base from "../../Base/models/Base.js";
 
 const Persona = sequelize.define(
   "Persona",
@@ -14,14 +15,9 @@ const Persona = sequelize.define(
       allowNull: false,
     },
     base_codigo: {
-
         type: DataTypes.STRING,
-
         allowNull: false,
         references: { model: Base, key: "base_codigo" }
-      type: DataTypes.INTEGER,
-      allowNull: false,
-
     },
     activo: {
       type: DataTypes.BOOLEAN,
