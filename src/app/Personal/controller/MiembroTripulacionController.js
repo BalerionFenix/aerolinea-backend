@@ -1,8 +1,8 @@
 import MiembroTripulacionDAO from "../repositories/MiembroTripulacionDAO.js";
 import PersonaDAO from "../repositories/PersonaDAO.js";
-import { MiembroTripulacionInputDTO, MiembroTripulacionOutputDTO } from "../dto/MiembroTripulacionDTO.js";
+import { MiembroTripulacionInputDTO, MiembroTripulacionUpdateDTO, MiembroTripulacionOutputDTO } from "../dto/MiembroTripulacionDTO.js";
 import { PersonaInputDTO } from "../dto/PersonaDTO.js";
-import { CreateMiembroSchema } from "../validators/MiembroTripulacionValidator.js";
+import { CreateMiembroSchema, UpdateMiembroSchema } from "../validators/MiembroTripulacionValidator.js";
 import sequelize from "../../../config/config_db.js";
 
 export const createMiembro = async (req, res) => {
@@ -13,7 +13,6 @@ export const createMiembro = async (req, res) => {
             nombre,
             base_codigo,
             cargo,
-            fecha_ingreso,
             activo = true
         } = req.body;
 
@@ -25,26 +24,25 @@ export const createMiembro = async (req, res) => {
             return res.status(400).json({ errors });
         }
 
-        // 1. Crear la persona primero
-        const persona = await PersonaDAO.create(
-            {
-                nombre,
-                base_codigo,
-                activo
-            },
-            { transaction }
-        );
+        // 1. Crear la persona
+        const personaData = new PersonaInputDTO({
+            nombre,
+            base_codigo,
+            activo
+        });
 
-        // 2. Crear el miembro con el mismo código de persona
-        const miembro = await MiembroTripulacionDAO.create(
-            {
-                miembro_codigo: persona.persona_codigo, // Mismo ID que la persona
-                cargo,
-                fecha_ingreso,
-                activo
-            },
-            { transaction }
-        );
+        const persona = await PersonaDAO.create(personaData, { transaction });
+
+        //console.log("Persona creada con código:", persona.persona_codigo);
+
+        // 2. Crear el miembro con código independiente
+        const miembroData = new MiembroTripulacionInputDTO({
+            persona_codigo: persona.persona_codigo,
+            cargo,
+            activo
+        });
+
+        const miembro = await MiembroTripulacionDAO.create(miembroData, { transaction });
 
         await transaction.commit();
         
@@ -56,7 +54,8 @@ export const createMiembro = async (req, res) => {
         await transaction.rollback();
         console.error("Error en createMiembro:", err);
         res.status(500).json({ 
-            message: err.message || "Error al crear miembro de tripulación"
+            message: "Error al crear miembro de tripulación", 
+            error: err.message 
         });
     }
 };
@@ -68,7 +67,8 @@ export const getMiembros = async (req, res) => {
     } catch (err) {
         console.error("Error en getMiembros:", err);
         res.status(500).json({ 
-            message: "Error al obtener los miembros de tripulación"
+            message: "Error al obtener miembros", 
+            error: err.message 
         });
     }
 };
@@ -93,7 +93,8 @@ export const getMiembro = async (req, res) => {
     } catch (err) {
         console.error("Error en getMiembro:", err);
         res.status(500).json({ 
-            message: "Error al obtener el miembro de tripulación"
+            message: "Error al obtener el miembro", 
+            error: err.message 
         });
     }
 };
@@ -116,28 +117,30 @@ export const updateMiembro = async (req, res) => {
             return res.status(400).json({ errors });
         }
 
-        // Obtener el miembro actual
-        const miembro = await MiembroTripulacionDAO.getById(codigo, { transaction });
-        if (!miembro) {
+        // Verificar si existe el miembro
+        const miembroExistente = await MiembroTripulacionDAO.getById(codigo);
+        if (!miembroExistente) {
             await transaction.rollback();
             return res.status(404).json({ 
                 message: `No se encontró ningún miembro con el código ${codigo}` 
             });
         }
 
-        // Actualizar datos de persona si se proporcionan
+        // Separar datos de persona y miembro
         const { nombre, base_codigo, activo, ...miembroData } = value;
         
-        if (nombre || base_codigo || activo !== undefined) {
-            const personaData = {};
-            if (nombre !== undefined) personaData.nombre = nombre;
-            if (base_codigo !== undefined) personaData.base_codigo = base_codigo;
-            if (activo !== undefined) personaData.activo = activo;
+        // Actualizar datos de persona si se proporcionan
+        if (nombre !== undefined || base_codigo !== undefined || activo !== undefined) {
+            const personaUpdateData = {};
+            if (nombre !== undefined) personaUpdateData.nombre = nombre;
+            if (base_codigo !== undefined) personaUpdateData.base_codigo = base_codigo;
+            if (activo !== undefined) personaUpdateData.activo = activo;
             
-            await PersonaDAO.update(miembro.persona_codigo, personaData, { transaction });
+            // Usar persona_codigo del miembro para actualizar
+            await PersonaDAO.update(miembroExistente.Persona.persona_codigo, personaUpdateData, { transaction });
         }
 
-        // Actualizar datos de miembro si se proporcionan
+        // Actualizar datos específicos de miembro si se proporcionan
         if (Object.keys(miembroData).length > 0) {
             await MiembroTripulacionDAO.update(
                 codigo, 
@@ -148,7 +151,7 @@ export const updateMiembro = async (req, res) => {
 
         await transaction.commit();
         
-        // Obtener el miembro actualizado con los datos de persona
+        // Obtener el miembro actualizado
         const miembroActualizado = await MiembroTripulacionDAO.getById(codigo);
         res.json(new MiembroTripulacionOutputDTO(miembroActualizado));
 
@@ -156,7 +159,8 @@ export const updateMiembro = async (req, res) => {
         await transaction.rollback();
         console.error("Error en updateMiembro:", err);
         res.status(500).json({ 
-            message: "Error al actualizar miembro de tripulación"
+            message: "Error al actualizar miembro", 
+            error: err.message 
         });
     }
 };
@@ -168,7 +172,7 @@ export const deleteMiembro = async (req, res) => {
         const { codigo } = req.params;
 
         // Verificar si existe el miembro
-        const miembro = await MiembroTripulacionDAO.getById(codigo, { transaction });
+        const miembro = await MiembroTripulacionDAO.getById(codigo);
         if (!miembro) {
             await transaction.rollback();
             return res.status(404).json({ 
@@ -176,11 +180,14 @@ export const deleteMiembro = async (req, res) => {
             });
         }
 
+        // Guardar el persona_codigo antes de eliminar
+        const personaCodigo = miembro.Persona.persona_codigo;
+
         // Eliminar el miembro
         await MiembroTripulacionDAO.delete(codigo, { transaction });
         
-        // Opcional: También podrías eliminar la persona asociada si lo deseas
-        // await PersonaDAO.delete(miembro.persona_codigo, { transaction });
+        // Opcional: También eliminar la persona asociada
+        await PersonaDAO.delete(personaCodigo, { transaction });
 
         await transaction.commit();
         res.status(204).send();
@@ -189,7 +196,8 @@ export const deleteMiembro = async (req, res) => {
         await transaction.rollback();
         console.error("Error en deleteMiembro:", err);
         res.status(500).json({ 
-            message: "Error al eliminar miembro de tripulación"
+            message: "Error al eliminar miembro", 
+            error: err.message 
         });
     }
 };

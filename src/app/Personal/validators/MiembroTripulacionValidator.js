@@ -6,19 +6,14 @@ export const CreateMiembroSchema = Joi.object({
         'string.empty': 'El nombre es obligatorio',
         'any.required': 'El nombre es obligatorio'
     }),
-    base_codigo: Joi.string().required().messages({
-        'string.empty': 'El código de base es obligatorio',
+    base_codigo: Joi.number().integer().required().messages({
+        'number.base': 'El código de base debe ser un número',
         'any.required': 'El código de base es obligatorio'
     }),
     
     // Datos de miembro de tripulación
-    cargo: Joi.string().required().messages({
-        'string.empty': 'El cargo es obligatorio',
-        'any.required': 'El cargo es obligatorio'
-    }),
-    fecha_ingreso: Joi.date().required().messages({
-        'date.base': 'La fecha de ingreso debe ser una fecha válida',
-        'any.required': 'La fecha de ingreso es obligatoria'
+    cargo: Joi.string().optional().allow('', null).messages({
+        'string.base': 'El cargo debe ser un texto'
     }),
     activo: Joi.boolean().default(true).messages({
         'boolean.base': 'El estado activo debe ser verdadero o falso'
@@ -30,16 +25,13 @@ export const UpdateMiembroSchema = Joi.object({
     nombre: Joi.string().optional().messages({
         'string.empty': 'El nombre no puede estar vacío'
     }),
-    base_codigo: Joi.string().optional().messages({
-        'string.empty': 'El código de base no puede estar vacío'
+    base_codigo: Joi.number().integer().optional().messages({
+        'number.base': 'El código de base debe ser un número'
     }),
     
     // Datos de miembro que pueden actualizarse
-    cargo: Joi.string().optional().messages({
-        'string.empty': 'El cargo no puede estar vacío'
-    }),
-    fecha_ingreso: Joi.date().optional().messages({
-        'date.base': 'La fecha de ingreso debe ser una fecha válida'
+    cargo: Joi.string().optional().allow('', null).messages({
+        'string.base': 'El cargo debe ser un texto'
     }),
     activo: Joi.boolean().optional().messages({
         'boolean.base': 'El estado activo debe ser verdadero o falso'

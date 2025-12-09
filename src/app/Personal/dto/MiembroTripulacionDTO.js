@@ -3,7 +3,6 @@ export class MiembroTripulacionInputDTO {
         this.miembro_codigo = data.miembro_codigo;
         this.persona_codigo = data.persona_codigo;
         this.cargo = data.cargo;
-        this.fecha_ingreso = data.fecha_ingreso;
         this.activo = data.activo !== undefined ? data.activo : true;
     }
 }
@@ -11,7 +10,6 @@ export class MiembroTripulacionInputDTO {
 export class MiembroTripulacionUpdateDTO {
     constructor(data) {
         this.cargo = data.cargo;
-        this.fecha_ingreso = data.fecha_ingreso;
         this.activo = data.activo;
     }
 }
@@ -20,7 +18,6 @@ export class MiembroTripulacionOutputDTO {
     constructor(miembro) {
         this.miembro_codigo = miembro.miembro_codigo;
         this.cargo = miembro.cargo;
-        this.fecha_ingreso = miembro.fecha_ingreso;
         this.activo = miembro.activo;
 
         if (miembro.Persona) {
