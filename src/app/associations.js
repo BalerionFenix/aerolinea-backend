@@ -83,8 +83,9 @@ export const setupAssociations = () => {
         Persona.hasOne(Usuario, {foreignKey: 'persona_codigo', sourceKey: 'persona_codigo', as: 'usuario'});
 
         // Miembro ↔ Vuelo (1:N)
-        Miembro.hasMany(Vuelo, { foreignKey: 'miembro_id', as: 'vuelos' });
-        Vuelo.belongsTo(Miembro, { foreignKey: 'miembro_id', as: 'miembro' });
+        Piloto.hasMany(Vuelo, { foreignKey: 'piloto_codigo',  sourceKey: 'piloto_codigo', as: 'vuelos'});
+
+        Vuelo.belongsTo(Piloto, {foreignKey: 'piloto_codigo', targetKey: 'piloto_codigo', as: 'piloto'});
 
         // =============================================
         // RELACIONES DEL MÓDULO MANTENIMIENTO
